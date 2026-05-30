@@ -369,3 +369,360 @@ $border: rgba(255, 255, 255, 0.1);
     padding: 22px;
   }
 }
+// services-prices
+.services-prices {
+  padding: 34px 0 42px;
+  color: $text;
+  background: #070b0f;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+
+  &__container {
+    max-width: 1480px;
+    margin: 0 auto;
+    padding: 0 22px;
+  }
+
+  &__top {
+    display: grid;
+    grid-template-columns: 1.45fr 1fr;
+    gap: 44px;
+    align-items: start;
+  }
+
+  &__title {
+    margin: 0 0 22px;
+    font-size: 29px;
+    line-height: 1.1;
+    font-weight: 900;
+  }
+}
+
+.services-block {
+  padding-right: 44px;
+  border-right: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+.service-card {
+  position: relative;
+  overflow: hidden;
+  min-height: 136px;
+  padding: 24px 26px;
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: 14px;
+  background: #0b1117;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.03),
+    0 10px 30px rgba(0, 0, 0, 0.22);
+
+  &::before {
+    content: "";
+    position: absolute;
+    right: 8px;
+    bottom: 0;
+    width: 76%;
+    height: 78%;
+    background-repeat: no-repeat;
+    background-position: right bottom;
+    background-size: contain;
+    opacity: 1;
+    filter: brightness(1.12) contrast(1.04);
+    transition: transform 0.35s ease;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(
+        90deg,
+        rgba(7, 11, 15, 0.42) 0%,
+        rgba(7, 11, 15, 0.12) 42%,
+        rgba(7, 11, 15, 0) 100%
+      ),
+      linear-gradient(
+        180deg,
+        rgba(7, 11, 15, 0) 0%,
+        rgba(7, 11, 15, 0.18) 100%
+      );
+  }
+
+  &:hover::before {
+    transform: scale(1.06);
+  }
+
+  h3 {
+    position: relative;
+    z-index: 2;
+    margin: 0;
+    max-width: 150px;
+    font-size: 18px;
+    line-height: 1.25;
+    font-weight: 900;
+  }
+
+  &__arrow {
+    position: absolute;
+    left: 26px;
+    bottom: 20px;
+    z-index: 2;
+    width: 42px;
+    height: 24px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: $orange;
+    font-size: 18px;
+    border: 1px solid rgba(255, 116, 23, 0.35);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.035);
+  }
+
+  &--car::before {
+    background-image: url("../img/service-car.png");
+  }
+
+  &--suv::before {
+    background-image: url("../img/service-suv.png");
+  }
+
+  &--moto::before {
+    background-image: url("../img/service-moto.png");
+  }
+
+  &--help {
+    grid-column: span 1;
+  }
+
+  &--help::before {
+    width: 70%;
+    background-image: url("../img/service-help.png");
+  }
+
+  &--map {
+    grid-column: span 2;
+  }
+
+  &--map::before {
+    width: 80%;
+    background-image: url("../img/service-map.png");
+  }
+}
+
+.prices-block {
+  min-width: 0;
+}
+
+.price-list {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255, 116, 23, 0.42);
+  border-radius: 15px;
+  background: #0b1117;
+
+  &__label {
+    position: absolute;
+    top: 0;
+    right: 80px;
+    z-index: 2;
+    padding: 6px 12px;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 900;
+    background: $orange;
+    border-radius: 0 0 6px 6px;
+  }
+}
+
+.price-row {
+  min-height: 70px;
+  padding: 0 24px;
+  display: grid;
+  grid-template-columns: 28px 1fr auto;
+  align-items: center;
+  gap: 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &__icon {
+    color: $orange;
+    font-size: 20px;
+  }
+
+  p {
+    margin: 0;
+    color: $muted;
+    font-size: 15px;
+    font-weight: 700;
+  }
+
+  strong {
+    color: $text;
+    font-size: 22px;
+    font-weight: 950;
+    white-space: nowrap;
+  }
+}
+
+.prices-note {
+  margin-top: 15px;
+  min-height: 45px;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  color: $orange;
+  border: 1px solid rgba(255, 116, 23, 0.35);
+  border-radius: 11px;
+  background: rgba(255, 116, 23, 0.045);
+
+  span {
+    font-size: 30px;
+    font-weight: 950;
+  }
+
+  p {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 900;
+  }
+}
+
+.service-area {
+  position: relative;
+  overflow: hidden;
+  min-height: 145px;
+  margin-top: 24px;
+  padding: 28px 34px;
+  display: grid;
+  grid-template-columns: 1.1fr 0.45fr 1fr;
+  align-items: center;
+  gap: 30px;
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: 14px;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(7, 11, 15, 0.86) 0%,
+      rgba(7, 11, 15, 0.58) 40%,
+      rgba(7, 11, 15, 0.14) 100%
+    ),
+    url("../img/service-map-bg.png") right center / contain no-repeat,
+    #0b1117;
+}
+
+  &__content {
+    position: relative;
+    z-index: 2;
+
+    span {
+      display: block;
+      margin-bottom: 10px;
+      color: rgba(255, 255, 255, 0.66);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    h3 {
+      margin: 0;
+      font-size: 31px;
+      line-height: 1.2;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+    }
+  }
+
+  &__list {
+    position: relative;
+    z-index: 2;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 10px;
+
+    li {
+      position: relative;
+      padding-left: 22px;
+      color: rgba(255, 255, 255, 0.82);
+      font-size: 14px;
+      font-weight: 700;
+
+      &::before {
+        content: "📍";
+        position: absolute;
+        left: 0;
+        top: -1px;
+        font-size: 13px;
+      }
+    }
+  }
+}
+
+@media (max-width: 1180px) {
+  .services-prices {
+    &__top {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .services-block {
+    padding-right: 0;
+    border-right: none;
+  }
+}
+
+@media (max-width: 760px) {
+  .services-prices {
+    padding: 34px 0;
+
+    &__container {
+      padding: 0 16px;
+    }
+
+    &__title {
+      font-size: 26px;
+    }
+  }
+
+  .services-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .service-card,
+  .service-card--help,
+  .service-card--map {
+    grid-column: auto;
+  }
+
+  .price-row {
+    padding: 18px;
+    grid-template-columns: 28px 1fr;
+
+    strong {
+      grid-column: 2;
+      font-size: 20px;
+    }
+  }
+
+  .service-area {
+    grid-template-columns: 1fr;
+    padding: 24px;
+    background-size: cover;
+
+    &__content h3 {
+      font-size: 24px;
+    }
+  }
+}
