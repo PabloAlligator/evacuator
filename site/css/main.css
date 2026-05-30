@@ -432,3 +432,90 @@ body.menu-open {
     font-size: 100px;
   }
 }
+.advantages {
+  position: relative;
+  padding: 46px 0 56px;
+  color: #f7f9fc;
+  background: radial-gradient(circle at 50% 0%, rgba(255, 116, 23, 0.08), transparent 28%), #070b0f;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+.advantages__container {
+  max-width: 1480px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+.advantages__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+}
+
+.section-head {
+  margin-bottom: 28px;
+  text-align: center;
+}
+.section-head span {
+  display: block;
+  margin-bottom: 8px;
+  color: #ff7417;
+  font-size: 13px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+.section-head h2 {
+  margin: 0;
+  color: #f7f9fc;
+  font-size: clamp(30px, 3vw, 42px);
+  line-height: 1.1;
+  font-weight: 900;
+}
+
+.advantages-card {
+  min-height: 150px;
+  padding: 28px 30px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  border: 1px solid rgba(255, 116, 23, 0.45);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.025);
+}
+.advantages-card__icon {
+  flex: 0 0 auto;
+  color: #ff7417;
+  font-size: 48px;
+  line-height: 1;
+}
+.advantages-card h3 {
+  margin: 0 0 10px;
+  font-size: 18px;
+  font-weight: 900;
+}
+.advantages-card p {
+  margin: 0;
+  max-width: 210px;
+  color: rgba(247, 249, 252, 0.72);
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+@media (max-width: 1180px) {
+  .advantages__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 640px) {
+  .advantages {
+    padding: 40px 0;
+  }
+  .advantages__container {
+    padding: 0 16px;
+  }
+  .advantages__grid {
+    grid-template-columns: 1fr;
+  }
+  .advantages-card {
+    min-height: auto;
+    padding: 22px;
+  }
+}
