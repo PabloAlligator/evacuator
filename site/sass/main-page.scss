@@ -422,7 +422,7 @@ $border: rgba(255, 255, 255, 0.1);
     0 10px 30px rgba(0, 0, 0, 0.22);
 
   &::before {
-    content: "";
+    content: '';
     position: absolute;
     right: 8px;
     bottom: 0;
@@ -437,7 +437,7 @@ $border: rgba(255, 255, 255, 0.1);
   }
 
   &::after {
-    content: "";
+    content: '';
     position: absolute;
     inset: 0;
     background:
@@ -447,11 +447,7 @@ $border: rgba(255, 255, 255, 0.1);
         rgba(7, 11, 15, 0.12) 42%,
         rgba(7, 11, 15, 0) 100%
       ),
-      linear-gradient(
-        180deg,
-        rgba(7, 11, 15, 0) 0%,
-        rgba(7, 11, 15, 0.18) 100%
-      );
+      linear-gradient(180deg, rgba(7, 11, 15, 0) 0%, rgba(7, 11, 15, 0.18) 100%);
   }
 
   &:hover::before {
@@ -486,15 +482,15 @@ $border: rgba(255, 255, 255, 0.1);
   }
 
   &--car::before {
-    background-image: url("../img/service-car.png");
+    background-image: url('../img/service-car.png');
   }
 
   &--suv::before {
-    background-image: url("../img/service-suv.png");
+    background-image: url('../img/service-suv.png');
   }
 
   &--moto::before {
-    background-image: url("../img/service-moto.png");
+    background-image: url('../img/service-moto.png');
   }
 
   &--help {
@@ -503,7 +499,7 @@ $border: rgba(255, 255, 255, 0.1);
 
   &--help::before {
     width: 70%;
-    background-image: url("../img/service-help.png");
+    background-image: url('../img/service-help.png');
   }
 
   &--map {
@@ -512,7 +508,7 @@ $border: rgba(255, 255, 255, 0.1);
 
   &--map::before {
     width: 80%;
-    background-image: url("../img/service-map.png");
+    background-image: url('../img/service-map.png');
   }
 }
 
@@ -617,7 +613,7 @@ $border: rgba(255, 255, 255, 0.1);
       rgba(7, 11, 15, 0.58) 40%,
       rgba(7, 11, 15, 0.14) 100%
     ),
-    url("../img/service-map-bg.png") right center / contain no-repeat,
+    url('../img/service-map-bg.png') right center / contain no-repeat,
     #0b1117;
 
   &__content {
@@ -658,7 +654,7 @@ $border: rgba(255, 255, 255, 0.1);
       font-weight: 700;
 
       &::before {
-        content: "📍";
+        content: '📍';
         position: absolute;
         left: 0;
         top: -1px;
@@ -765,7 +761,7 @@ $border: rgba(255, 255, 255, 0.1);
   text-align: center;
 
   &:not(:last-child)::after {
-    content: "";
+    content: '';
     position: absolute;
     top: 52px;
     right: -24px;
@@ -787,12 +783,7 @@ $border: rgba(255, 255, 255, 0.1);
     font-size: 22px;
     font-weight: 900;
     border-radius: 50%;
-    background:
-      linear-gradient(
-        135deg,
-        #ff8f2b,
-        #ff5c00
-      );
+    background: linear-gradient(135deg, #ff8f2b, #ff5c00);
     box-shadow:
       0 0 0 6px rgba(255, 116, 23, 0.12),
       0 10px 26px rgba(255, 116, 23, 0.35);
@@ -817,8 +808,8 @@ $border: rgba(255, 255, 255, 0.1);
       ),
       #0b1117;
     box-shadow:
-      inset 0 0 0 1px rgba(255,255,255,0.02),
-      0 10px 26px rgba(0,0,0,0.24);
+      inset 0 0 0 1px rgba(255, 255, 255, 0.02),
+      0 10px 26px rgba(0, 0, 0, 0.24);
   }
 
   h3 {
@@ -883,6 +874,276 @@ $border: rgba(255, 255, 255, 0.1);
 
     p {
       font-size: 15px;
+    }
+  }
+}
+
+// reviews
+
+.reviews {
+  padding: 54px 0 60px;
+  color: $text;
+  background:
+    radial-gradient(
+      circle at 50% 100%,
+      rgba(255, 116, 23, 0.08),
+      transparent 32%
+    ),
+    #070b0f;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+
+  &__container {
+    max-width: 1480px;
+    margin: 0 auto;
+    padding: 0 22px;
+  }
+
+  &__title {
+    margin: 0 0 34px;
+    text-align: center;
+    font-size: 42px;
+    line-height: 1.1;
+    font-weight: 900;
+  }
+}
+
+.reviews-slider {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+
+  &__track {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+  }
+
+  &__arrow {
+    width: 52px;
+    height: 52px;
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 50%;
+    background:
+      radial-gradient(
+        circle at 50% 50%,
+        rgba(255, 255, 255, 0.06),
+        rgba(255, 255, 255, 0.02)
+      ),
+      #0b1117;
+    cursor: pointer;
+    transition: 0.3s ease;
+
+    &:hover {
+      color: $orange;
+      border-color: rgba(255, 116, 23, 0.3);
+      transform: translateY(-2px);
+    }
+  }
+
+  &__dots {
+    margin-top: 24px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+
+    span {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+
+      &.active {
+        width: 24px;
+        border-radius: 999px;
+        background: $orange;
+      }
+    }
+  }
+}
+
+.review-card {
+  min-height: 190px;
+  padding: 28px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.045),
+      rgba(255, 255, 255, 0.015)
+    ),
+    #0b1117;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.02),
+    0 10px 26px rgba(0, 0, 0, 0.22);
+
+  &__top {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 18px;
+
+    img {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid rgba(255, 255, 255, 0.08);
+    }
+
+    h3 {
+      margin: 0 0 8px;
+      font-size: 18px;
+      font-weight: 900;
+    }
+  }
+
+  &__stars {
+    color: #ff9d2f;
+    font-size: 16px;
+    letter-spacing: 2px;
+  }
+
+  p {
+    margin: 0;
+    color: $muted;
+    font-size: 16px;
+    line-height: 1.65;
+    font-weight: 500;
+  }
+}
+
+@media (max-width: 1180px) {
+  .reviews-slider {
+    &__track {
+      grid-template-columns: 1fr;
+    }
+
+    &__arrow {
+      display: none;
+    }
+  }
+}
+
+@media (max-width: 760px) {
+  .reviews {
+    padding: 42px 0;
+
+    &__container {
+      padding: 0 16px;
+    }
+
+    &__title {
+      font-size: 32px;
+    }
+  }
+
+  .review-card {
+    padding: 24px;
+
+    &__top {
+      img {
+        width: 54px;
+        height: 54px;
+      }
+
+      h3 {
+        font-size: 17px;
+      }
+    }
+
+    p {
+      font-size: 15px;
+    }
+  }
+}
+.reviews-swiper {
+  position: relative;
+  padding: 0 70px 50px;
+
+  .swiper-slide {
+    height: auto;
+  }
+
+  &__prev,
+  &__next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    width: 52px;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255,255,255,0.85);
+    font-size: 24px;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 50%;
+    background:
+      radial-gradient(
+        circle at 50% 50%,
+        rgba(255,255,255,0.06),
+        rgba(255,255,255,0.02)
+      ),
+      #0b1117;
+    cursor: pointer;
+    transition: 0.3s ease;
+
+    &:hover {
+      color: $orange;
+      border-color: rgba(255,116,23,0.3);
+    }
+  }
+
+  &__prev {
+    left: 0;
+  }
+
+  &__next {
+    right: 0;
+  }
+
+  &__pagination {
+    position: absolute;
+    bottom: 0 !important;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+
+    .swiper-pagination-bullet {
+      width: 8px;
+      height: 8px;
+      opacity: 1;
+      background: rgba(255,255,255,0.2);
+      border-radius: 999px;
+      transition: 0.3s ease;
+    }
+
+    .swiper-pagination-bullet-active {
+      width: 24px;
+      background: $orange;
+    }
+  }
+}
+
+@media (max-width: 760px) {
+  .reviews-swiper {
+    padding: 0 0 40px;
+
+    &__prev,
+    &__next {
+      display: none;
     }
   }
 }

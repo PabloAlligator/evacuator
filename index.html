@@ -21,6 +21,10 @@
 
     <meta name="theme-color" content="#070b0f" />
 
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+    />
     <link rel="stylesheet" href="site/css/main.css" />
   </head>
 
@@ -390,8 +394,82 @@
           </div>
         </div>
       </section>
-    </main>
 
+      <!-- reviews -->
+
+      <section class="reviews" id="reviews">
+        <div class="reviews__container">
+          <h2 class="reviews__title">Отзывы клиентов</h2>
+
+          <div class="swiper reviews-swiper">
+            <div class="swiper-wrapper">
+              <div class="swiper-slide">
+                <article class="review-card">
+                  <div class="review-card__top">
+                    <img src="site/img/review-1.jpg" alt="Алексей" />
+
+                    <div>
+                      <h3>Алексей, Абакан</h3>
+
+                      <div class="review-card__stars">★★★★★</div>
+                    </div>
+                  </div>
+
+                  <p>
+                    Приехали быстро, погрузили аккуратно, довезли без проблем.
+                    Цена адекватная. Рекомендую!
+                  </p>
+                </article>
+              </div>
+
+              <div class="swiper-slide">
+                <article class="review-card">
+                  <div class="review-card__top">
+                    <img src="site/img/review-2.jpg" alt="Марина" />
+
+                    <div>
+                      <h3>Марина, Черногорск</h3>
+
+                      <div class="review-card__stars">★★★★★</div>
+                    </div>
+                  </div>
+
+                  <p>
+                    Спасибо за помощь на трассе! Оперативно, вежливо,
+                    профессионально. Лучший эвакуатор в Хакасии!
+                  </p>
+                </article>
+              </div>
+
+              <div class="swiper-slide">
+                <article class="review-card">
+                  <div class="review-card__top">
+                    <img src="site/img/review-3.jpg" alt="Дмитрий" />
+
+                    <div>
+                      <h3>Дмитрий, Минусинск</h3>
+
+                      <div class="review-card__stars">★★★★★</div>
+                    </div>
+                  </div>
+
+                  <p>
+                    Выручили в сложной ситуации. Работают 24/7 — это реально
+                    важно. Спасибо!
+                  </p>
+                </article>
+              </div>
+            </div>
+
+            <div class="reviews-swiper__pagination"></div>
+
+            <div class="reviews-swiper__prev">←</div>
+            <div class="reviews-swiper__next">→</div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script src="site/scripts/main.js"></script>
   </body>
 </html>
