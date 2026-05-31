@@ -64,7 +64,7 @@ window.addEventListener(
 
 if (typeof Swiper !== 'undefined') {
   new Swiper('.reviews-swiper', {
-    loop: true,
+    loop: false,
     spaceBetween: 20,
 
     autoplay: {
