@@ -97,3 +97,23 @@ if (typeof Swiper !== 'undefined') {
     },
   });
 }
+
+// reveal animation
+
+const revealItems = document.querySelectorAll('.reveal');
+
+function revealOnScroll() {
+  const triggerBottom = window.innerHeight * 0.88;
+
+  revealItems.forEach((item) => {
+    const itemTop = item.getBoundingClientRect().top;
+
+    if (itemTop < triggerBottom) {
+      item.classList.add('active');
+    }
+  });
+}
+
+window.addEventListener('scroll', revealOnScroll);
+
+revealOnScroll();
