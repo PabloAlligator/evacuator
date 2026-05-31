@@ -41,7 +41,7 @@ button {
   display: flex;
   align-items: center;
   color: #f7f9fc;
-  background: url("../img/hero-bg.jpg") center right/cover no-repeat, #070b0f;
+  background: url("../img/hero-bg.webp") center right/cover no-repeat, #070b0f;
 }
 .hero__overlay {
   position: absolute;
@@ -378,23 +378,23 @@ button {
 }
 
 .service-card--car::before {
-  background-image: url("../img/service-car.jpg");
+  background-image: url("../img/service-car.webp");
 }
 
 .service-card--suv::before {
-  background-image: url("../img/service-suv.jpg");
+  background-image: url("../img/service-suv.webp");
 }
 
 .service-card--moto::before {
-  background-image: url("../img/service-moto.jpg");
+  background-image: url("../img/service-moto.webp");
 }
 
 .service-card--help::before {
-  background-image: url("../img/service-help.jpg");
+  background-image: url("../img/service-help.webp");
 }
 
 .service-card--map::before {
-  background-image: url("../img/service-map.jpg");
+  background-image: url("../img/service-map.webp");
 }
 
 .services-grid {
