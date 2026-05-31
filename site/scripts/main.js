@@ -99,21 +99,26 @@ if (typeof Swiper !== 'undefined') {
 }
 
 // reveal animation
+// reveal animation
 
 const revealItems = document.querySelectorAll('.reveal');
 
-function revealOnScroll() {
-  const triggerBottom = window.innerHeight * 0.88;
+const revealObserver = new IntersectionObserver(
+  (entries, observer) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('active');
 
-  revealItems.forEach((item) => {
-    const itemTop = item.getBoundingClientRect().top;
+        // после появления перестаём следить
+        observer.unobserve(entry.target);
+      }
+    });
+  },
+  {
+    threshold: 0.15,
+  },
+);
 
-    if (itemTop < triggerBottom) {
-      item.classList.add('active');
-    }
-  });
-}
-
-window.addEventListener('scroll', revealOnScroll);
-
-revealOnScroll();
+revealItems.forEach((item) => {
+  revealObserver.observe(item);
+});
