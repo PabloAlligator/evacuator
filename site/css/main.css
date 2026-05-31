@@ -226,6 +226,19 @@ body.menu-open {
     top: 68px;
   }
 }
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #070b0f;
+  color: #fff;
+}
+
 .main {
   overflow: hidden;
   background: #070b0f;
@@ -1134,5 +1147,111 @@ body.menu-open {
   }
   .reviews-swiper__prev, .reviews-swiper__next {
     display: none;
+  }
+}
+.cta {
+  padding: 28px 0 36px;
+  background: #070b0f;
+}
+.cta__container {
+  position: relative;
+  overflow: hidden;
+  max-width: 1480px;
+  margin: 0 auto;
+  padding: 26px 34px;
+  display: grid;
+  grid-template-columns: 1fr 420px;
+  align-items: center;
+  gap: 34px;
+  border: 1px solid rgba(255, 116, 23, 0.18);
+  border-radius: 18px;
+  background: linear-gradient(90deg, rgba(7, 11, 15, 0.96) 0%, rgba(7, 11, 15, 0.82) 42%, rgba(7, 11, 15, 0.62) 100%), radial-gradient(circle at 50% 50%, rgba(255, 116, 23, 0.08), transparent 42%), #0b1117;
+}
+.cta__content h2 {
+  margin: 0 0 10px;
+  font-size: 34px;
+  line-height: 1.1;
+  font-weight: 900;
+}
+.cta__content h2 span {
+  display: block;
+  margin-top: 6px;
+  color: #ff7417;
+}
+.cta__content p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 16px;
+  line-height: 1.5;
+}
+.cta__action {
+  padding-left: 34px;
+  border-left: 1px solid rgba(255, 255, 255, 0.08);
+}
+.cta__phone {
+  margin-bottom: 18px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  color: #fff;
+  text-decoration: none;
+}
+.cta__phone span {
+  color: #ff7417;
+  font-size: 26px;
+}
+.cta__phone strong {
+  font-size: 28px;
+  line-height: 1;
+  font-weight: 900;
+}
+.cta__btn {
+  width: 100%;
+  height: 58px;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 800;
+  text-decoration: none;
+  border-radius: 12px;
+  background: linear-gradient(180deg, #ff9d2f, #ff6a00);
+  box-shadow: 0 10px 24px rgba(255, 116, 23, 0.3);
+  transition: 0.3s ease;
+}
+.cta__btn:hover {
+  transform: translateY(-2px);
+}
+.cta__safe {
+  color: rgba(255, 255, 255, 0.68);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+@media (max-width: 980px) {
+  .cta__container {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+  .cta__action {
+    padding-left: 0;
+    border-left: none;
+  }
+  .cta__phone {
+    justify-content: center;
+  }
+}
+@media (max-width: 760px) {
+  .cta__container {
+    margin: 0 16px;
+    padding: 24px 20px;
+  }
+  .cta__content h2 {
+    font-size: 28px;
+  }
+  .cta__phone strong {
+    font-size: 24px;
   }
 }

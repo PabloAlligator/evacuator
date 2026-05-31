@@ -5,6 +5,18 @@ $text: #f7f9fc;
 $muted: rgba(247, 249, 252, 0.72);
 $border: rgba(255, 255, 255, 0.1);
 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #070b0f;
+  color: #fff;
+}
 .main {
   overflow: hidden;
   background: $dark;
@@ -1084,15 +1096,15 @@ $border: rgba(255, 255, 255, 0.1);
     display: flex;
     align-items: center;
     justify-content: center;
-    color: rgba(255,255,255,0.85);
+    color: rgba(255, 255, 255, 0.85);
     font-size: 24px;
-    border: 1px solid rgba(255,255,255,0.08);
+    border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 50%;
     background:
       radial-gradient(
         circle at 50% 50%,
-        rgba(255,255,255,0.06),
-        rgba(255,255,255,0.02)
+        rgba(255, 255, 255, 0.06),
+        rgba(255, 255, 255, 0.02)
       ),
       #0b1117;
     cursor: pointer;
@@ -1100,7 +1112,7 @@ $border: rgba(255, 255, 255, 0.1);
 
     &:hover {
       color: $orange;
-      border-color: rgba(255,116,23,0.3);
+      border-color: rgba(255, 116, 23, 0.3);
     }
   }
 
@@ -1125,7 +1137,7 @@ $border: rgba(255, 255, 255, 0.1);
       width: 8px;
       height: 8px;
       opacity: 1;
-      background: rgba(255,255,255,0.2);
+      background: rgba(255, 255, 255, 0.2);
       border-radius: 999px;
       transition: 0.3s ease;
     }
@@ -1144,6 +1156,170 @@ $border: rgba(255, 255, 255, 0.1);
     &__prev,
     &__next {
       display: none;
+    }
+  }
+}
+
+// cta
+
+.cta {
+  padding: 28px 0 36px;
+  background: #070b0f;
+
+  &__container {
+    position: relative;
+    overflow: hidden;
+    max-width: 1480px;
+    margin: 0 auto;
+    padding: 26px 34px;
+    display: grid;
+    grid-template-columns: 1fr 420px;
+    align-items: center;
+    gap: 34px;
+
+    border: 1px solid rgba(255, 116, 23, 0.18);
+    border-radius: 18px;
+
+    // background:
+    //   linear-gradient(
+    //     90deg,
+    //     rgba(7, 11, 15, 0.92) 0%,
+    //     rgba(7, 11, 15, 0.78) 42%,
+    //     rgba(7, 11, 15, 0.55) 100%
+    //   ),
+    //   url("../img/hero-bg.jpg") center / cover no-repeat,
+    //   #0b1117;
+    background:
+      linear-gradient(
+        90deg,
+        rgba(7, 11, 15, 0.96) 0%,
+        rgba(7, 11, 15, 0.82) 42%,
+        rgba(7, 11, 15, 0.62) 100%
+      ),
+      radial-gradient(
+        circle at 50% 50%,
+        rgba(255, 116, 23, 0.08),
+        transparent 42%
+      ),
+      #0b1117;
+  }
+
+  &__content {
+    h2 {
+      margin: 0 0 10px;
+      font-size: 34px;
+      line-height: 1.1;
+      font-weight: 900;
+
+      span {
+        display: block;
+        margin-top: 6px;
+        color: $orange;
+      }
+    }
+
+    p {
+      margin: 0;
+      color: rgba(255, 255, 255, 0.72);
+      font-size: 16px;
+      line-height: 1.5;
+    }
+  }
+
+  &__action {
+    padding-left: 34px;
+    border-left: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  &__phone {
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    color: #fff;
+    text-decoration: none;
+
+    span {
+      color: $orange;
+      font-size: 26px;
+    }
+
+    strong {
+      font-size: 28px;
+      line-height: 1;
+      font-weight: 900;
+    }
+  }
+
+  &__btn {
+    width: 100%;
+    height: 58px;
+    margin-bottom: 14px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #fff;
+    font-size: 16px;
+    font-weight: 800;
+    text-decoration: none;
+
+    border-radius: 12px;
+
+    background: linear-gradient(180deg, #ff9d2f, #ff6a00);
+
+    box-shadow: 0 10px 24px rgba(255, 116, 23, 0.3);
+
+    transition: 0.3s ease;
+
+    &:hover {
+      transform: translateY(-2px);
+    }
+  }
+
+  &__safe {
+    color: rgba(255, 255, 255, 0.68);
+    font-size: 14px;
+    font-weight: 600;
+  }
+}
+
+@media (max-width: 980px) {
+  .cta {
+    &__container {
+      grid-template-columns: 1fr;
+      text-align: center;
+    }
+
+    &__action {
+      padding-left: 0;
+      border-left: none;
+    }
+
+    &__phone {
+      justify-content: center;
+    }
+  }
+}
+
+@media (max-width: 760px) {
+  .cta {
+    &__container {
+      margin: 0 16px;
+      padding: 24px 20px;
+    }
+
+    &__content {
+      h2 {
+        font-size: 28px;
+      }
+    }
+
+    &__phone {
+      strong {
+        font-size: 24px;
+      }
     }
   }
 }
