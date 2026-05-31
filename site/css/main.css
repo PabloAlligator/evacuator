@@ -1255,3 +1255,65 @@ body {
     font-size: 24px;
   }
 }
+.footer {
+  padding: 18px 0;
+  background: #070b0f;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+.footer__container {
+  max-width: 1480px;
+  margin: 0 auto;
+  padding: 0 22px;
+  display: grid;
+  grid-template-columns: 240px 1fr auto auto;
+  align-items: center;
+  gap: 42px;
+}
+.footer__logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #fff;
+  text-decoration: none;
+}
+.footer__logo strong {
+  display: block;
+  color: #ff7417;
+  font-size: 18px;
+  line-height: 1;
+  font-weight: 900;
+}
+.footer__logo small {
+  display: block;
+  margin-top: 4px;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+.footer__logo-car {
+  color: #ff7417;
+  font-size: 30px;
+  line-height: 1;
+}
+.footer__copy, .footer__link {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.56);
+  font-size: 14px;
+  font-weight: 600;
+}
+.footer__link {
+  text-decoration: none;
+}
+.footer__link:hover {
+  color: #ff7417;
+}
+
+@media (max-width: 760px) {
+  .footer__container {
+    grid-template-columns: 1fr;
+    gap: 14px;
+    text-align: center;
+    justify-items: center;
+  }
+}
