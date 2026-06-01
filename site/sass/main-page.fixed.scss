@@ -60,7 +60,7 @@ button {
   align-items: center;
   color: $text;
   background:
-    url('../img/hero-bg.webp') center right / cover no-repeat,
+    url('../img/hero-back.png') center right / cover no-repeat,
     $dark;
 
   &__overlay {
@@ -161,6 +161,14 @@ button {
     span {
       color: $orange;
       font-size: 22px;
+
+      img {
+        object-fit: cover;
+        width: 100%;
+        max-width: 32px;
+        height: auto;
+        display: block;
+      }
     }
 
     p {
@@ -309,6 +317,14 @@ button {
     color: $orange;
     font-size: 48px;
     line-height: 1;
+
+    img {
+      display: block;
+      object-fit: cover;
+      width: 100%;
+      max-width: 44px;
+      height: auto;
+    }
   }
 
   h3 {
@@ -450,6 +466,13 @@ button {
     transition:
       transform 0.35s ease,
       box-shadow 0.35s ease;
+
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+      max-width: 32px;
+    }
   }
 
   &:hover {
@@ -559,7 +582,11 @@ button {
   padding: 26px;
   border-radius: 24px;
   background:
-    radial-gradient(circle at top right, rgba(255, 122, 24, 0.18), transparent 36%),
+    radial-gradient(
+      circle at top right,
+      rgba(255, 122, 24, 0.18),
+      transparent 36%
+    ),
     rgba(10, 14, 20, 0.92);
   border: 1px solid rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(8px);
@@ -658,7 +685,7 @@ button {
     place-items: center;
     flex: 0 0 auto;
     color: #ffffff;
-    font-size: 22px;
+    font-size: 18px;
     font-weight: 950;
     border-radius: 50%;
     background: linear-gradient(135deg, #ff7a18, #ff9b52);
@@ -716,11 +743,7 @@ button {
   border: 1px solid rgba(255, 255, 255, 0.08);
 
   background:
-    linear-gradient(
-      135deg,
-      rgba(255, 122, 24, 0.12),
-      rgba(255, 122, 24, 0.02)
-    ),
+    linear-gradient(135deg, rgba(255, 122, 24, 0.12), rgba(255, 122, 24, 0.02)),
     rgba(10, 14, 20, 0.92);
 
   backdrop-filter: blur(10px);
@@ -733,12 +756,11 @@ button {
     content: '';
     position: absolute;
     inset: 0;
-    background:
-      radial-gradient(
-        circle at top right,
-        rgba(255, 122, 24, 0.22),
-        transparent 36%
-      );
+    background: radial-gradient(
+      circle at top right,
+      rgba(255, 122, 24, 0.22),
+      transparent 36%
+    );
     pointer-events: none;
   }
 
@@ -777,7 +799,15 @@ button {
       border: 1px solid rgba(255, 122, 24, 0.25);
 
       &::before {
-        content: '📍';
+        content: '';
+        width: 24px;
+        height: 24px;
+        flex-shrink: 0;
+
+        background-image: url('../img/locationW.png');
+        background-size: contain;
+        background-position: center;
+        background-repeat: no-repeat;
       }
     }
 
@@ -828,16 +858,18 @@ button {
         background 0.3s ease;
 
       &::before {
-        content: '📍';
+        content: '';
+
         width: 34px;
         height: 34px;
-        display: grid;
-        place-items: center;
+
         flex: 0 0 auto;
 
         border-radius: 50%;
 
-        background: linear-gradient(135deg, #ff7a18, #ff9b52);
+        background:
+          url('../img/locationW.png') center / 22px 22px no-repeat,
+          linear-gradient(135deg, #ff7a18, #ff9b52);
 
         box-shadow: 0 10px 24px rgba(255, 122, 24, 0.24);
       }
@@ -886,9 +918,15 @@ button {
 
 .steps {
   position: relative;
+  overflow: hidden;
   padding: 92px 0;
+
   background:
-    radial-gradient(circle at top left, rgba(255, 122, 24, 0.1), transparent 34%),
+    radial-gradient(
+      circle at top left,
+      rgba(255, 122, 24, 0.1),
+      transparent 34%
+    ),
     #070b0f;
 }
 
@@ -899,6 +937,7 @@ button {
 
 .steps__title {
   margin: 0 0 42px;
+
   color: #ffffff;
   font-size: clamp(34px, 4vw, 56px);
   line-height: 1;
@@ -909,6 +948,7 @@ button {
 
 .steps__grid {
   position: relative;
+
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 16px;
@@ -919,22 +959,26 @@ button {
     left: 8%;
     right: 8%;
     top: 42px;
+    z-index: 0;
+
     height: 2px;
+
     background: linear-gradient(
       90deg,
       transparent,
       rgba(255, 122, 24, 0.7),
       transparent
     );
-    z-index: 0;
   }
 }
 
 .step-card {
   position: relative;
   z-index: 1;
+
   min-height: 210px;
   padding: 22px 18px;
+
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -944,7 +988,11 @@ button {
   border: 1px solid rgba(255, 255, 255, 0.08);
 
   background:
-    linear-gradient(180deg, rgba(255, 122, 24, 0.08), rgba(255, 122, 24, 0.02)),
+    linear-gradient(
+      180deg,
+      rgba(255, 122, 24, 0.08),
+      rgba(255, 122, 24, 0.02)
+    ),
     rgba(10, 14, 20, 0.92);
 
   backdrop-filter: blur(8px);
@@ -977,20 +1025,28 @@ button {
 
   &__icon {
     margin-bottom: 12px;
-    font-size: 28px;
     line-height: 1;
+
+    img {
+      display: block;
+      width: 48px;
+      height: auto;
+    }
   }
 
   h3 {
     margin: 0 0 10px;
+
     color: #ffffff;
     font-size: 17px;
+    line-height: 1.1;
     font-weight: 900;
     text-transform: uppercase;
   }
 
   p {
     margin: 0;
+
     color: rgba(255, 255, 255, 0.64);
     font-size: 13px;
     line-height: 1.45;
@@ -1004,7 +1060,11 @@ button {
   }
 }
 
-@media (max-width: 980px) {
+@media (max-width: 1024px) {
+  .steps {
+    padding: 76px 0;
+  }
+
   .steps__grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
 
@@ -1013,36 +1073,44 @@ button {
     }
   }
 }
-
-@media (max-width: 680px) {
+@media (max-width: 768px) {
   .steps {
-    padding: 70px 0;
+    padding: 52px 0;
+  }
+
+  .steps__container {
+    width: min(100% - 28px, 1180px);
+    margin: 0 auto;
+    padding: 0;
   }
 
   .steps__title {
-    margin-bottom: 28px;
+    margin-bottom: 24px;
     text-align: left;
+    font-size: 32px;
   }
 
   .steps__grid {
     grid-template-columns: 1fr;
     gap: 14px;
+
+    &::before {
+      display: none;
+    }
   }
 
   .step-card {
     min-height: auto;
     padding: 18px;
-    display: grid;
-    grid-template-columns: 54px 1fr;
-    gap: 10px 14px;
-    align-items: center;
+    align-items: flex-start;
     text-align: left;
+    border-radius: 20px;
 
     &__number {
-      grid-row: 1 / 3;
-      width: 48px;
-      height: 48px;
-      margin-bottom: 0;
+      width: 44px;
+      height: 44px;
+      margin-bottom: 14px;
+      font-size: 18px;
     }
 
     &__icon {
@@ -1050,27 +1118,67 @@ button {
     }
 
     h3 {
-      margin: 0;
-      font-size: 18px;
-      line-height: 1.05;
+      margin: 0 0 8px;
+      font-size: 22px;
+      line-height: 1;
     }
 
     p {
-      grid-column: 2;
-      margin: 0;
+      max-width: none;
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    &:hover {
+      transform: none;
+      box-shadow: none;
+    }
+  }
+}
+
+@media (max-width: 420px) {
+  .steps__container {
+    width: min(100% - 24px, 1180px);
+  }
+
+  .steps__title {
+    font-size: 30px;
+  }
+
+  .step-card {
+    padding: 16px;
+    border-radius: 18px;
+
+    &__number {
+      width: 40px;
+      height: 40px;
+      margin-bottom: 12px;
+      font-size: 16px;
+    }
+
+    h3 {
+      font-size: 20px;
+    }
+
+    p {
       font-size: 13px;
-      line-height: 1.4;
     }
   }
 }
 
 /* REVIEWS */
+
 .reviews {
   position: relative;
   overflow: hidden;
-  padding: 92px 0;
+  padding: 82px 0 88px;
+
   background:
-    radial-gradient(circle at top right, rgba(255, 122, 24, 0.12), transparent 34%),
+    radial-gradient(
+      circle at top right,
+      rgba(255, 122, 24, 0.12),
+      transparent 34%
+    ),
     #070b0f;
 }
 
@@ -1081,63 +1189,89 @@ button {
 
 .reviews__title {
   margin: 0 0 42px;
+
   color: #ffffff;
-  font-size: clamp(34px, 4vw, 56px);
+  font-size: clamp(36px, 4vw, 58px);
   line-height: 1;
   font-weight: 950;
-  letter-spacing: -0.04em;
+  letter-spacing: -0.045em;
   text-align: center;
 }
 
 .reviews-swiper {
   position: relative;
-  overflow: visible;
-  padding: 4px 4px 72px;
+  overflow: hidden;
+  padding: 0 0 74px;
+
+  .swiper-wrapper {
+    align-items: stretch;
+  }
+
+  .swiper-slide {
+    height: auto;
+    display: flex;
+  }
 }
 
 .review-card {
   position: relative;
-  min-height: 260px;
-  padding: 26px;
   overflow: hidden;
+
+  width: 100%;
+  min-height: 250px;
+  padding: 28px;
+
+  display: flex;
+  flex-direction: column;
+
   border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
 
   background:
-    linear-gradient(180deg, rgba(255, 122, 24, 0.08), rgba(255, 122, 24, 0.02)),
-    rgba(10, 14, 20, 0.92);
+    linear-gradient(
+      135deg,
+      rgba(255, 122, 24, 0.08),
+      rgba(255, 122, 24, 0.025) 42%,
+      rgba(255, 255, 255, 0.02)
+    ),
+    rgba(10, 14, 20, 0.94);
 
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(8px);
-
-  box-shadow: 0 20px 52px rgba(0, 0, 0, 0.26);
+  box-shadow:
+    0 18px 48px rgba(0, 0, 0, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
 
   transition:
-    transform 0.35s ease,
-    border-color 0.35s ease,
-    box-shadow 0.35s ease;
+    transform 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
 
   &::before {
     content: '“';
     position: absolute;
-    right: 22px;
-    top: 8px;
-    color: rgba(255, 122, 24, 0.16);
-    font-size: 110px;
+    top: 10px;
+    right: 24px;
+
+    color: rgba(255, 122, 24, 0.18);
+    font-size: 84px;
     line-height: 1;
     font-family: Georgia, serif;
+
     pointer-events: none;
   }
 
   &::after {
     content: '';
     position: absolute;
-    right: 24px;
-    bottom: 24px;
-    width: 90px;
-    height: 90px;
+    right: 28px;
+    bottom: 22px;
+
+    width: 110px;
+    height: 110px;
+
     border-radius: 50%;
-    background: rgba(255, 122, 24, 0.14);
-    filter: blur(22px);
+    background: rgba(255, 122, 24, 0.1);
+    filter: blur(28px);
+
     pointer-events: none;
   }
 
@@ -1145,25 +1279,14 @@ button {
     position: relative;
     z-index: 2;
 
-    display: flex;
-    align-items: center;
-    gap: 14px;
     margin-bottom: 22px;
 
-    img {
-      width: 58px;
-      height: 58px;
-      flex: 0 0 auto;
-      object-fit: cover;
-      border-radius: 50%;
-      border: 2px solid rgba(255, 122, 24, 0.55);
-      box-shadow: 0 10px 26px rgba(255, 122, 24, 0.18);
-    }
-
     h3 {
-      margin: 0 0 6px;
+      margin: 0 0 8px;
+
       color: #ffffff;
-      font-size: 17px;
+      font-size: 20px;
+      line-height: 1.15;
       font-weight: 900;
     }
   }
@@ -1171,7 +1294,9 @@ button {
   &__stars {
     color: #ff9b52;
     font-size: 14px;
-    letter-spacing: 0.12em;
+    line-height: 1;
+    letter-spacing: 0.14em;
+
     text-shadow: 0 0 18px rgba(255, 122, 24, 0.35);
   }
 
@@ -1180,33 +1305,46 @@ button {
     z-index: 2;
 
     margin: 0;
-    color: rgba(255, 255, 255, 0.7);
+
+    color: rgba(255, 255, 255, 0.72);
     font-size: 15px;
     line-height: 1.65;
-    font-weight: 600;
+    font-weight: 650;
   }
 
   &:hover {
-    transform: translateY(-6px);
-    border-color: rgba(255, 122, 24, 0.42);
-    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.38);
+    transform: translateY(-5px);
+    border-color: rgba(255, 122, 24, 0.36);
+    box-shadow:
+      0 22px 56px rgba(0, 0, 0, 0.36),
+      inset 0 1px 0 rgba(255, 255, 255, 0.05);
   }
 }
 
 .reviews-swiper__pagination {
   position: absolute;
-  left: 50%;
-  bottom: 18px;
-  transform: translateX(-50%);
+  left: 0;
+  right: 0;
+  bottom: 22px;
+  z-index: 4;
+
+  width: 100%;
+
   display: flex;
+  align-items: center;
   justify-content: center;
   gap: 8px;
+
+  transform: none;
 
   .swiper-pagination-bullet {
     width: 9px;
     height: 9px;
     margin: 0 !important;
+
     opacity: 1;
+    border-radius: 999px;
+
     background: rgba(255, 255, 255, 0.25);
 
     transition:
@@ -1216,7 +1354,6 @@ button {
 
   .swiper-pagination-bullet-active {
     width: 28px;
-    border-radius: 999px;
     background: linear-gradient(135deg, #ff7a18, #ff9b52);
   }
 }
@@ -1224,11 +1361,11 @@ button {
 .reviews-swiper__prev,
 .reviews-swiper__next {
   position: absolute;
-  top: calc(50% - 32px);
-  z-index: 4;
+  bottom: 0;
+  z-index: 5;
 
-  width: 52px;
-  height: 52px;
+  width: 48px;
+  height: 48px;
 
   display: grid;
   place-items: center;
@@ -1236,60 +1373,178 @@ button {
   border-radius: 50%;
   cursor: pointer;
 
-  color: #ffffff;
-  font-size: 24px;
-  font-weight: 900;
+  font-size: 0;
+  color: transparent;
 
   background: linear-gradient(135deg, #ff7a18, #ff9b52);
 
   box-shadow:
-    0 14px 36px rgba(255, 122, 24, 0.36),
+    0 14px 32px rgba(255, 122, 24, 0.32),
     inset 0 1px 0 rgba(255, 255, 255, 0.24);
 
   transition:
     transform 0.3s ease,
-    box-shadow 0.3s ease;
+    box-shadow 0.3s ease,
+    opacity 0.3s ease;
+
+  &::before {
+    content: '';
+
+    width: 20px;
+    height: 20px;
+
+    background: url('/site/img/arrowW.png') center / contain no-repeat;
+  }
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow:
+      0 18px 40px rgba(255, 122, 24, 0.46),
+      inset 0 1px 0 rgba(255, 255, 255, 0.28);
+  }
+
+  &.swiper-button-disabled {
+    opacity: 0.35;
+    pointer-events: none;
+  }
 }
 
 .reviews-swiper__prev {
-  left: -26px;
+  left: calc(50% - 120px);
+
+  &::before {
+    transform: rotate(180deg);
+  }
 }
 
 .reviews-swiper__next {
-  right: -26px;
+  right: calc(50% - 120px);
 }
 
-.reviews-swiper__prev:hover,
-.reviews-swiper__next:hover {
-  transform: scale(1.08);
-  box-shadow:
-    0 18px 44px rgba(255, 122, 24, 0.48),
-    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+@media (max-width: 1024px) {
+  .reviews {
+    padding: 72px 0 78px;
+  }
+
+  .reviews__title {
+    margin-bottom: 34px;
+  }
+
+  .review-card {
+    min-height: 230px;
+  }
 }
 
-@media (max-width: 900px) {
+@media (max-width: 768px) {
+  .reviews {
+    padding: 54px 0 58px;
+  }
+
+  .reviews__container {
+    width: min(100% - 28px, 1180px);
+  }
+
+  .reviews__title {
+    margin-bottom: 24px;
+
+    font-size: clamp(30px, 9vw, 40px);
+    text-align: left;
+    letter-spacing: -0.04em;
+  }
+
+  .reviews-swiper {
+    padding: 0 0 42px;
+  }
+
+  .review-card {
+    min-height: 220px;
+    padding: 24px 22px;
+    border-radius: 22px;
+
+    &::before {
+      top: 10px;
+      right: 20px;
+      font-size: 76px;
+    }
+
+    &::after {
+      width: 86px;
+      height: 86px;
+    }
+
+    &__top {
+      margin-bottom: 18px;
+
+      h3 {
+        font-size: 19px;
+      }
+    }
+
+    p {
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    &:hover {
+      transform: none;
+    }
+  }
+
   .reviews-swiper__prev,
   .reviews-swiper__next {
     display: none;
   }
+
+  .reviews-swiper__pagination {
+    left: 0;
+    right: 0;
+    bottom: 8px;
+
+    width: 100%;
+
+    justify-content: center;
+    transform: none;
+  }
 }
 
-@media (max-width: 620px) {
+@media (max-width: 420px) {
   .reviews {
-    padding: 70px 0;
+    padding: 48px 0 52px;
+  }
+
+  .reviews__container {
+    width: min(100% - 24px, 1180px);
   }
 
   .reviews__title {
-    margin-bottom: 28px;
-    text-align: left;
+    margin-bottom: 22px;
+    font-size: 30px;
   }
 
   .review-card {
-    min-height: auto;
-    padding: 22px;
-    border-radius: 22px;
+    min-height: 210px;
+    padding: 22px 20px;
+    border-radius: 20px;
+
+    &__top {
+      margin-bottom: 16px;
+
+      h3 {
+        font-size: 18px;
+      }
+    }
+
+    &__stars {
+      font-size: 13px;
+    }
+
+    p {
+      font-size: 13px;
+      line-height: 1.55;
+    }
   }
 }
+
 /* CTA */
 
 .cta {
@@ -1297,8 +1552,16 @@ button {
   overflow: hidden;
   padding: 96px 0;
   background:
-    radial-gradient(circle at top left, rgba(255, 122, 24, 0.16), transparent 34%),
-    radial-gradient(circle at bottom right, rgba(255, 122, 24, 0.12), transparent 32%),
+    radial-gradient(
+      circle at top left,
+      rgba(255, 122, 24, 0.16),
+      transparent 34%
+    ),
+    radial-gradient(
+      circle at bottom right,
+      rgba(255, 122, 24, 0.12),
+      transparent 32%
+    ),
     #070b0f;
 }
 
@@ -1567,13 +1830,6 @@ button {
     border-right: none;
   }
 
-  .steps__grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .step-card::after {
-    display: none;
-  }
 }
 
 @media (max-width: 760px) {
@@ -1744,64 +2000,6 @@ button {
 
     &__content h3 {
       font-size: 24px;
-    }
-  }
-
-  .steps {
-    padding: 38px 0;
-
-    &__container {
-      padding: 0 16px;
-    }
-
-    &__title {
-      margin-bottom: 26px;
-      text-align: left;
-      font-size: 30px;
-    }
-
-    &__grid {
-      grid-template-columns: 1fr;
-      gap: 18px;
-    }
-  }
-
-  .step-card {
-    min-height: 72px;
-    padding: 18px 0 18px 74px;
-    text-align: left;
-
-    &:not(:last-child) {
-      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-    }
-
-    &__number {
-      top: 16px;
-      left: 0;
-      width: 46px;
-      height: 46px;
-      font-size: 20px;
-    }
-
-    &__icon {
-      position: absolute;
-      top: 12px;
-      right: 0;
-      width: 54px;
-      height: 54px;
-      margin: 0;
-      font-size: 24px;
-    }
-
-    h3 {
-      margin: 0 0 6px;
-      font-size: 22px;
-    }
-
-    p {
-      max-width: 240px;
-      font-size: 14px;
-      line-height: 1.45;
     }
   }
 
@@ -2150,26 +2348,26 @@ button {
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
   }
 
-.floating-actions__btn {
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  .floating-actions__btn {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
 
-  border: 1px solid rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.12);
 
-  transition:
-    transform 0.3s ease,
-    background 0.3s ease,
-    border-color 0.3s ease;
-}
+    transition:
+      transform 0.3s ease,
+      background 0.3s ease,
+      border-color 0.3s ease;
+  }
 
-.floating-actions__btn:hover {
-  transform: translateY(-4px);
+  .floating-actions__btn:hover {
+    transform: translateY(-4px);
 
-  background: rgba(255, 116, 23, 0.18);
+    background: rgba(255, 116, 23, 0.18);
 
-  border-color: rgba(255, 116, 23, 0.4);
-}
+    border-color: rgba(255, 116, 23, 0.4);
+  }
 }
 
 @media (max-width: 620px) {

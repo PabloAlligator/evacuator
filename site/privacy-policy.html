@@ -1,0 +1,704 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Политика конфиденциальности | Эвакуатор 19</title>
+
+    <meta
+      name="description"
+      content="Политика конфиденциальности и обработки персональных данных сайта Эвакуатор 19."
+    />
+    <meta name="robots" content="index, follow" />
+
+    <link rel="canonical" href="https://site.ru/privacy-policy.html" />
+    <link rel="stylesheet" href="/site/css/main.css" />
+
+    <style>
+      :root {
+        --black-main: #070b0f;
+        --black-soft: #0d1117;
+        --card: rgba(10, 14, 20, 0.92);
+        --orange: #ff7a18;
+        --orange-light: #ff9b52;
+        --white: #ffffff;
+        --text: rgba(255, 255, 255, 0.72);
+        --muted: rgba(255, 255, 255, 0.54);
+        --border: rgba(255, 255, 255, 0.08);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+
+        color: var(--white);
+        font-family: Arial, 'Helvetica Neue', sans-serif;
+
+        background:
+          radial-gradient(
+            circle at top right,
+            rgba(255, 122, 24, 0.14),
+            transparent 34%
+          ),
+          radial-gradient(
+            circle at bottom left,
+            rgba(255, 122, 24, 0.08),
+            transparent 32%
+          ),
+          var(--black-main);
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      .legal-page {
+        min-height: 100vh;
+      }
+
+      .legal-hero {
+        position: relative;
+        overflow: hidden;
+        padding: 48px 0 42px;
+
+        border-bottom: 1px solid var(--border);
+
+        background:
+          linear-gradient(
+            135deg,
+            rgba(255, 122, 24, 0.1),
+            rgba(255, 122, 24, 0.02)
+          ),
+          rgba(7, 11, 15, 0.96);
+      }
+
+      .legal-hero::before {
+        content: '';
+        position: absolute;
+        right: -120px;
+        top: -140px;
+
+        width: 360px;
+        height: 360px;
+
+        border-radius: 50%;
+        background: rgba(255, 122, 24, 0.18);
+        filter: blur(70px);
+
+        pointer-events: none;
+      }
+
+      .legal-hero::after {
+        content: '19';
+        position: absolute;
+        right: 8vw;
+        bottom: -46px;
+
+        color: rgba(255, 255, 255, 0.035);
+        font-size: clamp(120px, 18vw, 260px);
+        line-height: 1;
+        font-weight: 900;
+
+        pointer-events: none;
+      }
+
+      .legal-hero__container,
+      .legal-content__container {
+        position: relative;
+        z-index: 2;
+
+        width: min(960px, calc(100% - 32px));
+        margin: 0 auto;
+      }
+
+      .legal-hero__back {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+
+        margin-bottom: 28px;
+        padding: 12px 18px;
+
+        border-radius: 999px;
+        border: 1px solid rgba(255, 122, 24, 0.28);
+
+        color: var(--white);
+        font-size: 14px;
+        font-weight: 800;
+
+        background: rgba(255, 122, 24, 0.1);
+
+        transition:
+          transform 0.25s ease,
+          border-color 0.25s ease,
+          background 0.25s ease;
+      }
+
+      .legal-hero__back:hover {
+        transform: translateX(-3px);
+        border-color: rgba(255, 122, 24, 0.48);
+        background: rgba(255, 122, 24, 0.16);
+      }
+
+      .legal-hero__label {
+        display: inline-flex;
+        align-items: center;
+
+        margin-bottom: 16px;
+        padding: 10px 16px;
+
+        border-radius: 999px;
+        border: 1px solid rgba(255, 122, 24, 0.28);
+
+        color: var(--orange-light);
+        font-size: 13px;
+        font-weight: 900;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+
+        background: rgba(255, 122, 24, 0.1);
+      }
+
+      .legal-hero h1 {
+        max-width: 860px;
+        margin: 0 0 18px;
+
+        color: var(--white);
+        font-size: clamp(36px, 6vw, 72px);
+        line-height: 0.96;
+        font-weight: 950;
+        letter-spacing: -0.055em;
+      }
+
+      .legal-hero p {
+        max-width: 720px;
+        margin: 0;
+
+        color: var(--text);
+        font-size: clamp(16px, 2vw, 20px);
+        line-height: 1.55;
+        font-weight: 600;
+      }
+
+      .legal-content {
+        padding: 56px 0 82px;
+      }
+
+      .legal-document {
+        position: relative;
+        overflow: hidden;
+
+        padding: 42px;
+
+        border-radius: 28px;
+        border: 1px solid var(--border);
+
+        background:
+          linear-gradient(
+            180deg,
+            rgba(255, 122, 24, 0.06),
+            rgba(255, 122, 24, 0.015)
+          ),
+          var(--card);
+
+        box-shadow:
+          0 24px 70px rgba(0, 0, 0, 0.32),
+          inset 0 1px 0 rgba(255, 255, 255, 0.04);
+      }
+
+      .legal-document::before {
+        content: '';
+        position: absolute;
+        right: -70px;
+        top: 180px;
+
+        width: 220px;
+        height: 220px;
+
+        border-radius: 50%;
+        background: rgba(255, 122, 24, 0.1);
+        filter: blur(50px);
+
+        pointer-events: none;
+      }
+
+      .legal-document h2 {
+        position: relative;
+        z-index: 2;
+
+        margin: 38px 0 16px;
+
+        color: var(--white);
+        font-size: clamp(23px, 3vw, 32px);
+        line-height: 1.12;
+        font-weight: 950;
+        letter-spacing: -0.035em;
+      }
+
+      .legal-document h2:first-of-type {
+        margin-top: 28px;
+      }
+
+      .legal-document p,
+      .legal-document li {
+        position: relative;
+        z-index: 2;
+
+        color: var(--text);
+        font-size: 16px;
+        line-height: 1.75;
+        font-weight: 600;
+      }
+
+      .legal-document p {
+        margin: 0 0 16px;
+      }
+
+      .legal-document strong {
+        color: var(--white);
+        font-weight: 900;
+      }
+
+      .legal-document a {
+        color: var(--orange-light);
+        font-weight: 900;
+        text-decoration: underline;
+        text-decoration-color: rgba(255, 122, 24, 0.35);
+        text-underline-offset: 4px;
+      }
+
+      .legal-document ul {
+        position: relative;
+        z-index: 2;
+
+        display: grid;
+        gap: 10px;
+
+        margin: 16px 0 24px;
+        padding: 0;
+
+        list-style: none;
+      }
+
+      .legal-document li {
+        position: relative;
+
+        padding-left: 28px;
+      }
+
+      .legal-document li::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 13px;
+
+        width: 9px;
+        height: 9px;
+
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--orange), var(--orange-light));
+
+        box-shadow: 0 0 18px rgba(255, 122, 24, 0.42);
+      }
+
+      @media (max-width: 768px) {
+        .legal-hero {
+          padding: 34px 0 36px;
+        }
+
+        .legal-hero__container,
+        .legal-content__container {
+          width: min(100% - 28px, 960px);
+        }
+
+        .legal-hero__back {
+          margin-bottom: 22px;
+          padding: 10px 15px;
+          font-size: 13px;
+        }
+
+        .legal-hero__label {
+          margin-bottom: 14px;
+          padding: 9px 14px;
+          font-size: 12px;
+        }
+
+        .legal-hero h1 {
+          margin-bottom: 14px;
+          font-size: clamp(34px, 11vw, 52px);
+        }
+
+        .legal-hero p {
+          font-size: 15px;
+          line-height: 1.5;
+        }
+
+        .legal-content {
+          padding: 34px 0 58px;
+        }
+
+        .legal-document {
+          padding: 26px 22px;
+          border-radius: 22px;
+        }
+
+        .legal-document h2 {
+          margin: 32px 0 14px;
+          font-size: 24px;
+        }
+
+        .legal-document p,
+        .legal-document li {
+          font-size: 14px;
+          line-height: 1.65;
+        }
+
+        .legal-document ul {
+          gap: 8px;
+          margin: 14px 0 22px;
+        }
+
+        .legal-document li {
+          padding-left: 24px;
+        }
+
+        .legal-document li::before {
+          top: 10px;
+          width: 8px;
+          height: 8px;
+        }
+      }
+
+      @media (max-width: 420px) {
+        .legal-hero__container,
+        .legal-content__container {
+          width: min(100% - 24px, 960px);
+        }
+
+        .legal-hero h1 {
+          font-size: 34px;
+        }
+
+        .legal-content {
+          padding-top: 28px;
+        }
+
+        .legal-document {
+          padding: 22px 18px;
+          border-radius: 20px;
+        }
+
+        .legal-document h2 {
+          font-size: 22px;
+        }
+
+        .legal-document p,
+        .legal-document li {
+          font-size: 13px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <main class="legal-page">
+      <section class="legal-hero">
+        <div class="legal-hero__container">
+          <a class="legal-hero__back" href="/">← На главную</a>
+
+          <span class="legal-hero__label">Эвакуатор 19</span>
+
+          <h1>Политика конфиденциальности</h1>
+
+          <p>
+            Настоящая политика определяет порядок обработки и защиты информации
+            пользователей сайта.
+          </p>
+        </div>
+      </section>
+
+      <section class="legal-content">
+        <div class="legal-content__container">
+          <article class="legal-document">
+
+            <h2>1. Общие положения</h2>
+
+            <p>
+              Настоящая Политика конфиденциальности и обработки персональных
+              данных определяет порядок обработки и защиты информации
+              пользователей сайта «Эвакуатор 19», размещённого по адресу:
+              <strong>https://site.ru</strong>.
+            </p>
+
+            <p>
+              Оператором персональных данных является:
+              <strong
+                >Индивидуальный предприниматель Круглов Сергей
+                Владимирович</strong
+              >, ОГРНИП <strong>308190114300089</strong>, ИНН
+              <strong>190102091952</strong>.
+            </p>
+
+            <p>
+              Адрес Оператора:
+              <strong></strong>.
+            </p>
+
+            <p>
+              Контактный телефон:
+              <a href="tel:+79509661222">8 950 966-12-22</a>.
+            </p>
+
+            <p>
+              E-mail для обращений:
+              <a href="mailto:example@mail.ru">example@mail.ru</a>.
+            </p>
+
+            <p>
+              Сайт носит информационный характер и предназначен для размещения
+              сведений об услугах эвакуатора, зоне обслуживания, ценах,
+              контактах и порядке обращения.
+            </p>
+
+            <p>
+              На сайте не используются формы регистрации, личный кабинет,
+              онлайн-оплата и иные механизмы, предполагающие самостоятельный
+              ввод пользователем персональных данных непосредственно на сайте.
+            </p>
+
+            <h2>2. Какие данные могут обрабатываться</h2>
+
+            <p>
+              При обычном посещении сайта Оператор не запрашивает у пользователя
+              фамилию, имя, отчество, номер телефона, адрес электронной почты,
+              паспортные данные и иные сведения, позволяющие напрямую
+              идентифицировать пользователя.
+            </p>
+
+            <p>
+              При работе сайта могут автоматически передаваться технические
+              сведения, необходимые для функционирования сайта и обеспечения его
+              безопасности:
+            </p>
+
+            <ul>
+              <li>IP-адрес;</li>
+              <li>тип браузера и устройства;</li>
+              <li>дата и время посещения;</li>
+              <li>адрес запрашиваемой страницы;</li>
+              <li>технические сведения, передаваемые браузером и сервером.</li>
+            </ul>
+
+            <p>
+              Указанные технические сведения используются исключительно для
+              обеспечения работоспособности сайта, защиты от технических сбоев и
+              неправомерных действий, а также для администрирования сайта.
+            </p>
+
+            <p>
+              При обращении пользователя по телефону, через мессенджер или иным
+              способом вне сайта пользователь может добровольно сообщить
+              Оператору сведения, необходимые для оказания услуг эвакуатора:
+            </p>
+
+            <ul>
+              <li>имя или обращение пользователя;</li>
+              <li>номер телефона;</li>
+              <li>адрес подачи эвакуатора;</li>
+              <li>маршрут перевозки;</li>
+              <li>сведения об автомобиле;</li>
+              <li>иную информацию, необходимую для выполнения заявки.</li>
+            </ul>
+
+            <p>
+              Такие сведения обрабатываются только в объёме, необходимом для
+              связи с пользователем, расчёта стоимости, согласования условий и
+              оказания услуг.
+            </p>
+
+            <h2>3. Цели обработки данных</h2>
+
+            <p>Оператор может обрабатывать данные в следующих целях:</p>
+
+            <ul>
+              <li>обеспечение корректной работы сайта;</li>
+              <li>информирование пользователей об услугах эвакуатора;</li>
+              <li>
+                обработка обращений пользователей, поступающих по телефону,
+                через мессенджеры или иные каналы связи;
+              </li>
+              <li>согласование условий оказания услуг;</li>
+              <li>
+                оказание услуг эвакуации и транспортировки транспортных средств;
+              </li>
+              <li>обеспечение безопасности сайта;</li>
+              <li>
+                исполнение требований законодательства Российской Федерации.
+              </li>
+            </ul>
+
+            <h2>4. Правовые основания обработки данных</h2>
+
+            <p>
+              Обработка персональных данных осуществляется в соответствии с
+              законодательством Российской Федерации.
+            </p>
+
+            <p>Основаниями обработки данных являются:</p>
+
+            <ul>
+              <li>добровольное обращение пользователя к Оператору;</li>
+              <li>
+                необходимость обработки данных для согласования и оказания
+                услуг;
+              </li>
+              <li>исполнение договора или подготовка к его заключению;</li>
+              <li>
+                исполнение обязанностей, предусмотренных законодательством
+                Российской Федерации.
+              </li>
+            </ul>
+
+            <h2>5. Cookies, формы и аналитика</h2>
+
+            <p>На сайте не используются формы сбора персональных данных.</p>
+
+            <p>На сайте не осуществляется регистрация пользователей.</p>
+
+            <p>На сайте не осуществляется онлайн-оплата.</p>
+
+            <p>
+              Сайт не использует cookies для идентификации конкретного
+              пользователя, если иное прямо не указано на сайте.
+            </p>
+
+            <p>
+              В случае подключения систем веб-аналитики, рекламных пикселей,
+              форм заявок, онлайн-чата или иных сервисов, связанных с обработкой
+              пользовательских данных, настоящая Политика подлежит обновлению.
+            </p>
+
+            <h2>6. Передача данных третьим лицам</h2>
+
+            <p>
+              Оператор не продаёт и не передаёт персональные данные
+              пользователей третьим лицам в коммерческих целях.
+            </p>
+
+            <p>
+              Передача данных может осуществляться только в следующих случаях:
+            </p>
+
+            <ul>
+              <li>
+                когда это необходимо для оказания услуги по обращению
+                пользователя;
+              </li>
+              <li>
+                поставщикам технической инфраструктуры, обеспечивающим работу
+                сайта;
+              </li>
+              <li>
+                операторам связи и мессенджерам при обращении пользователя через
+                соответствующие каналы;
+              </li>
+              <li>
+                государственным органам в случаях, предусмотренных
+                законодательством Российской Федерации.
+              </li>
+            </ul>
+
+            <h2>7. Срок хранения данных</h2>
+
+            <p>
+              Данные обрабатываются и хранятся не дольше, чем это необходимо для
+              достижения целей обработки.
+            </p>
+
+            <p>
+              Сведения, полученные при обращении пользователя по телефону или
+              через мессенджер, используются для обработки заявки и оказания
+              услуги.
+            </p>
+
+            <p>
+              Технические журналы сайта могут храниться в течение срока,
+              установленного настройками сервера, хостинг-провайдера или
+              требованиями законодательства.
+            </p>
+
+            <h2>8. Права пользователя</h2>
+
+            <p>Пользователь имеет право:</p>
+
+            <ul>
+              <li>
+                получать информацию об обработке своих персональных данных;
+              </li>
+              <li>
+                требовать уточнения, блокирования или удаления своих
+                персональных данных, если они являются неполными, устаревшими,
+                неточными или обрабатываются незаконно;
+              </li>
+              <li>
+                отозвать согласие на обработку персональных данных, когда
+                обработка осуществляется на основании согласия;
+              </li>
+              <li>
+                направить обращение Оператору по контактам, указанным в
+                настоящей Политике.
+              </li>
+            </ul>
+
+            <h2>9. Защита данных</h2>
+
+            <p>
+              Оператор принимает необходимые организационные и технические меры
+              для защиты данных от неправомерного доступа, изменения,
+              распространения, блокирования, копирования, предоставления и
+              уничтожения.
+            </p>
+
+            <p>
+              Доступ к данным ограничивается лицами, которым такая информация
+              необходима для обработки обращения пользователя и оказания услуг.
+            </p>
+
+            <h2>10. Изменение Политики</h2>
+
+            <p>Оператор вправе вносить изменения в настоящую Политику.</p>
+
+            <p>
+              Новая редакция Политики вступает в силу с момента её размещения на
+              сайте, если иное не указано в новой редакции.
+            </p>
+
+            <p>
+              Пользователю рекомендуется периодически проверять актуальную
+              редакцию Политики на сайте.
+            </p>
+
+            <h2>11. Контакты Оператора</h2>
+
+            <p>
+              <strong>ИП Круглов Сергей Владимирович</strong><br />
+              ОГРНИП: <strong>308190114300089</strong><br />
+              ИНН: <strong>190102091952</strong><br />
+              Телефон: <a href="tel:+79509661222">8 950 966-12-22</a><br />
+              E-mail: <a href="mailto:example@mail.ru">example@mail.ru</a><br />
+            </p>
+          </article>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
