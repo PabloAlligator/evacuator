@@ -1582,7 +1582,7 @@ button {
   content: "";
   width: 20px;
   height: 20px;
-  background: url("/site/img/arrowW.png") center/contain no-repeat;
+  background: url("../img/arrowW.png") center/contain no-repeat;
 }
 .reviews-swiper__prev:hover,
 .reviews-swiper__next:hover {
