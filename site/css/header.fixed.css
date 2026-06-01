@@ -104,6 +104,12 @@ body.menu-open .header {
   color: #ff7a1a;
   font-size: 24px;
 }
+.header__phone span img {
+  display: block;
+  max-width: 32px;
+  width: 100%;
+  height: auto;
+}
 .header__phone strong {
   display: block;
   font-size: 18px;

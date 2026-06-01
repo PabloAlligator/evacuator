@@ -2143,6 +2143,15 @@ button {
   &__phone {
     margin-top: 24px;
 
+    span {
+      img {
+        display: block;
+        max-width: 32px;
+        width: 100%;
+        height: auto;
+      }
+    }
+
     strong {
       font-size: 20px;
     }
@@ -2297,6 +2306,16 @@ button {
       inset 0 1px 0 rgba(255, 255, 255, 0.32);
   }
 }
+
+.floating-actions__btn--phone {
+  img {
+    display: block;
+    height: auto;
+    max-width: 32px;
+    width: 100%;
+  }
+}
+
 
 .floating-actions__btn--whatsapp {
   background: linear-gradient(135deg, #25d366, #18a84d);

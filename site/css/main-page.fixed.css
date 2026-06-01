@@ -1651,6 +1651,12 @@ button {
 .hero__phone {
   margin-top: 24px;
 }
+.hero__phone span img {
+  display: block;
+  max-width: 32px;
+  width: 100%;
+  height: auto;
+}
 .hero__phone strong {
   font-size: 20px;
 }
@@ -1764,6 +1770,13 @@ button {
 .floating-actions__btn:hover {
   transform: translateY(-4px) scale(1.04);
   box-shadow: 0 18px 42px rgba(0, 0, 0, 0.4), 0 14px 34px rgba(255, 122, 24, 0.46), inset 0 1px 0 rgba(255, 255, 255, 0.32);
+}
+
+.floating-actions__btn--phone img {
+  display: block;
+  height: auto;
+  max-width: 32px;
+  width: 100%;
 }
 
 .floating-actions__btn--whatsapp {
