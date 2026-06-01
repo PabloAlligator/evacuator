@@ -557,7 +557,6 @@ button {
   overflow: hidden;
   min-height: calc(100svh - 78px);
   padding: 0;
-  padding-top: 40px;
   display: flex;
   align-items: center;
   color: #f7f9fc;
