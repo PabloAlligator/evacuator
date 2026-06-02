@@ -566,7 +566,7 @@ button {
   display: flex;
   align-items: center;
   color: #f7f9fc;
-  background: url("../img/hero-back.png") center right/cover no-repeat, #070b0f;
+  background: url("../img/hero-back.webp") center right/cover no-repeat, #070b0f;
 }
 .hero__overlay {
   position: absolute;
