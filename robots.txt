@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://site.ru/sitemap.xml
+Sitemap: https://evakuator19.ru/sitemap.xml
