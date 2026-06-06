@@ -127,16 +127,20 @@
       background 0.3s ease;
 
     &::before {
-      content: '☎';
+      content: '';
       position: absolute;
       left: 16px;
       top: 50%;
 
+      width: 24px;
+      height: 24px;
+
       transform: translateY(-50%);
 
-      color: #ff8f2a;
-      font-size: 20px;
-      line-height: 1;
+      background-image: url('../img/phone.png');
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: contain;
     }
 
     span {
