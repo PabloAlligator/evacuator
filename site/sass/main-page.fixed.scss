@@ -1693,6 +1693,12 @@ button {
     box-shadow:
       0 12px 30px rgba(255, 122, 24, 0.34),
       inset 0 1px 0 rgba(255, 255, 255, 0.24);
+
+      img {
+        display: block;
+        max-width: 28px;
+        width: 100%;
+      }
   }
 
   strong {

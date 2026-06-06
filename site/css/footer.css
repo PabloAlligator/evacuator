@@ -231,6 +231,7 @@
     height: 44px;
     border-radius: 14px;
     font-size: 22px;
+    overflow: hidden;
   }
   .footer__logo-text strong {
     font-size: 15px;

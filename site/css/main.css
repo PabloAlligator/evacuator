@@ -480,6 +480,7 @@ body.menu-open .header {
     height: 44px;
     border-radius: 14px;
     font-size: 22px;
+    overflow: hidden;
   }
   .footer__logo-text strong {
     font-size: 15px;
@@ -1816,6 +1817,11 @@ button {
   font-size: 22px;
   background: linear-gradient(135deg, #ff7a18, #ff9b52);
   box-shadow: 0 12px 30px rgba(255, 122, 24, 0.34), inset 0 1px 0 rgba(255, 255, 255, 0.24);
+}
+.cta__phone span img {
+  display: block;
+  max-width: 28px;
+  width: 100%;
 }
 .cta__phone strong {
   display: block;
