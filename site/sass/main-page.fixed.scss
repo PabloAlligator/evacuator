@@ -1808,6 +1808,13 @@ button {
       width: 42px;
       height: 42px;
       font-size: 19px;
+
+      img {
+        max-width: 24px;
+        display: block;
+        width: 100%;
+        height: auto;
+      }
     }
 
     strong {

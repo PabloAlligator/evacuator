@@ -290,19 +290,6 @@ body.menu-open .header {
   color: #ffffff;
   text-decoration: none;
 }
-.footer__logo-icon {
-  width: 48px;
-  height: 48px;
-  display: grid;
-  place-items: center;
-  flex: 0 0 auto;
-  border-radius: 16px;
-  color: #ffffff;
-  font-size: 24px;
-  font-weight: 950;
-  background: linear-gradient(135deg, #ff7a18, #ff9b52);
-  box-shadow: 0 14px 34px rgba(255, 122, 24, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.24);
-}
 .footer__logo-text strong {
   display: block;
   color: #ffffff;
@@ -321,11 +308,10 @@ body.menu-open .header {
   letter-spacing: 0.12em;
 }
 .footer__phone {
-  position: relative;
   display: inline-flex;
-  flex-direction: column;
-  align-items: flex-end;
-  padding: 12px 18px 12px 48px;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 18px;
   border-radius: 18px;
   border: 1px solid rgba(255, 122, 24, 0.28);
   color: #ffffff;
@@ -333,36 +319,48 @@ body.menu-open .header {
   background: rgba(255, 122, 24, 0.1);
   transition: transform 0.3s ease, border-color 0.3s ease, background 0.3s ease;
 }
-.footer__phone::before {
-  content: "";
-  position: absolute;
-  left: 16px;
-  top: 50%;
-  width: 24px;
-  height: 24px;
-  transform: translateY(-50%);
-  background-image: url("../img/phone.png");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain;
+.footer__phone:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255, 122, 24, 0.52);
+  background: rgba(255, 122, 24, 0.16);
 }
-.footer__phone span {
+.footer__phone-icon {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ff7a18, #ff9b52);
+  box-shadow: 0 10px 24px rgba(255, 122, 24, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.24);
+}
+.footer__phone-icon img {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+}
+.footer__phone-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.footer__phone-content strong {
+  display: block;
+  color: #ffffff;
   font-size: 18px;
   line-height: 1;
   font-weight: 950;
   letter-spacing: 0.02em;
+  white-space: nowrap;
 }
-.footer__phone small {
+.footer__phone-content small {
+  display: block;
   margin-top: 6px;
   color: #ff8f2a;
   font-size: 12px;
   line-height: 1;
   font-weight: 850;
-}
-.footer__phone:hover {
-  transform: translateY(-2px);
-  border-color: rgba(255, 122, 24, 0.52);
-  background: rgba(255, 122, 24, 0.16);
+  white-space: nowrap;
 }
 .footer__middle {
   display: grid;
@@ -452,9 +450,6 @@ body.menu-open .header {
     align-items: flex-start;
     gap: 20px;
   }
-  .footer__phone {
-    align-items: flex-start;
-  }
   .footer__middle {
     grid-template-columns: 1fr;
     gap: 18px;
@@ -474,17 +469,6 @@ body.menu-open .header {
     padding-bottom: 22px;
     margin-bottom: 20px;
   }
-  .footer__logo {
-    align-items: flex-start;
-    gap: 12px;
-  }
-  .footer__logo-icon {
-    width: 44px;
-    height: 44px;
-    border-radius: 14px;
-    font-size: 22px;
-    overflow: hidden;
-  }
   .footer__logo-text strong {
     font-size: 15px;
   }
@@ -493,11 +477,23 @@ body.menu-open .header {
   }
   .footer__phone {
     width: 100%;
-    padding: 14px 16px 14px 46px;
+    justify-content: flex-start;
+    padding: 14px 16px;
     border-radius: 16px;
   }
-  .footer__phone span {
+  .footer__phone-icon {
+    width: 32px;
+    height: 32px;
+  }
+  .footer__phone-icon img {
+    width: 17px;
+    height: 17px;
+  }
+  .footer__phone-content strong {
     font-size: 17px;
+  }
+  .footer__phone-content small {
+    font-size: 12px;
   }
   .footer__middle {
     padding-bottom: 22px;

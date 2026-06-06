@@ -1393,6 +1393,12 @@ button {
     height: 42px;
     font-size: 19px;
   }
+  .cta__phone span img {
+    max-width: 24px;
+    display: block;
+    width: 100%;
+    height: auto;
+  }
   .cta__phone strong {
     font-size: 20px;
   }
