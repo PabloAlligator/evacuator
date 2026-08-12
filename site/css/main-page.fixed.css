@@ -1428,7 +1428,7 @@ button {
     background-position: 62% bottom;
   }
   .hero__overlay {
-    background: linear-gradient(180deg, rgba(7, 11, 15, 0.68) 0%, rgba(7, 11, 15, 0.86) 52%, rgba(7, 11, 15, 0.98) 100%);
+    background: linear-gradient(180deg, rgba(7, 11, 15, 0.45) 0%, rgba(7, 11, 15, 0.62) 52%, rgba(7, 11, 15, 0.82) 100%);
   }
   .hero__container {
     padding: 34px 16px 44px;
