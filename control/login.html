@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="robots" content="noindex, nofollow, noarchive">
+    <meta name="theme-color" content="#0b0c0e">
+    <title>Вход — Эвакуатор 19</title>
+    <link rel="icon" href="/site/img/icon.png">
+    <link rel="stylesheet" href="/control/vendor/tabler/tabler-icons.min.css">
+    <link rel="stylesheet" href="/control/assets/control.min.css">
+    <script src="/control/assets/login.js" defer></script>
+  </head>
+  <body class="login-page">
+    <main class="login-shell">
+      <section class="login-brand" aria-label="Эвакуатор 19">
+        <a class="brand" href="/">
+          <span class="brand__name">ЭВАКУАТОР</span><span class="brand__number">19</span>
+        </a>
+        <p>Заказы, клиенты и финансы в одном месте.</p>
+      </section>
+      <section class="login-panel">
+        <div class="login-panel__head">
+          <span class="eyebrow">Закрытая система</span>
+          <h1>Вход в CRM</h1>
+          <p>Введите данные владельца.</p>
+        </div>
+        <form id="login-form" class="form-stack" novalidate>
+          <label class="field">
+            <span>Email</span>
+            <span class="input-wrap"><i class="ti ti-mail" aria-hidden="true"></i><input name="email" type="email" autocomplete="username" maxlength="180" required placeholder="owner@example.ru"></span>
+          </label>
+          <label class="field">
+            <span>Пароль</span>
+            <span class="input-wrap"><i class="ti ti-lock" aria-hidden="true"></i><input name="password" type="password" autocomplete="current-password" minlength="12" maxlength="128" required placeholder="Не менее 12 символов"></span>
+          </label>
+          <div id="login-error" class="form-error" role="alert" hidden></div>
+          <button class="button button--primary button--large" type="submit"><span>Войти</span><i class="ti ti-arrow-right" aria-hidden="true"></i></button>
+        </form>
+        <a class="login-panel__back" href="/"><i class="ti ti-arrow-left" aria-hidden="true"></i> Вернуться на сайт</a>
+      </section>
+    </main>
+  </body>
+</html>

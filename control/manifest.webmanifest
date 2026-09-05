@@ -1,0 +1,17 @@
+{
+  "name": "Эвакуатор 19 — CRM",
+  "short_name": "Эвакуатор 19",
+  "start_url": "/control/app.html#/dashboard",
+  "scope": "/control/",
+  "display": "standalone",
+  "background_color": "#0b0c0e",
+  "theme_color": "#ff6200",
+  "icons": [
+    {
+      "src": "/site/img/icon.png",
+      "sizes": "any",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
