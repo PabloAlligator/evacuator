@@ -8,7 +8,7 @@
     "start": "node server.js",
     "dev": "node --watch server.js",
     "build:public-css": "sass site/sass/main.scss site/css/main.css --style=expanded --no-source-map && sass site/sass/main.scss site/css/main.min.css --style=compressed --no-source-map",
-    "build:control-css": "sass control/assets/control.scss control/assets/control.css --style=expanded --no-source-map && sass control/assets/control.scss control/assets/control.min.css --style=compressed --no-source-map",
+    "build:control-css": "sass site/sass/admin/control.scss site/css/admin/control.css --style=expanded --no-source-map && sass site/scss/admin/control.scss site/css/admin/control.min.css --style=compressed --no-source-map",
     "build:css": "npm run build:public-css && npm run build:control-css",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",

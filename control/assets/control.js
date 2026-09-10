@@ -9,8 +9,10 @@ const state = {
 };
 
 const app = document.querySelector('#app');
+const appShell = document.querySelector('.app-shell');
 const modalRoot = document.querySelector('#modal-root');
 const toastRoot = document.querySelector('#toast-root');
+let modalReturnFocus = null;
 
 const labels = {
   orderStatus: {
@@ -141,13 +143,30 @@ function setActiveNav(route) {
 }
 
 function openModal(title, body, footer = '', wide = false) {
-  modalRoot.innerHTML = `<div class="modal-backdrop" data-close-modal><section class="modal${wide ? ' modal--wide' : ''}" role="dialog" aria-modal="true" aria-labelledby="modal-title"><header class="modal__header"><h2 id="modal-title">${escapeHtml(title)}</h2><button class="icon-button" type="button" data-close-modal aria-label="Закрыть"><i class="ti ti-x"></i></button></header><div class="modal__body">${body}</div>${footer ? `<footer class="modal__footer">${footer}</footer>` : ''}</section></div>`;
-  modalRoot.querySelector('.modal')?.addEventListener('click', (event) => event.stopPropagation());
-  modalRoot.querySelector('input, select, textarea, button')?.focus();
+  if (!modalRoot.firstElementChild) {
+    modalReturnFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+  }
+  modalRoot.innerHTML = `<div class="modal-backdrop" data-modal-backdrop><section class="modal${wide ? ' modal--wide' : ''}" role="dialog" aria-modal="true" aria-labelledby="modal-title" tabindex="-1"><header class="modal__header"><h2 id="modal-title">${escapeHtml(title)}</h2><button class="icon-button modal__close" type="button" data-close-modal aria-label="Закрыть окно"><i class="ti ti-x" aria-hidden="true"></i></button></header><div class="modal__body">${body}</div>${footer ? `<footer class="modal__footer">${footer}</footer>` : ''}</section></div>`;
+  document.body.classList.add('is-modal-open');
+  appShell?.setAttribute('inert', '');
+  const modal = modalRoot.querySelector('.modal');
+  const initialFocus = modal?.querySelector('input:not([type="hidden"]), select, textarea, button:not([data-close-modal])') || modal;
+  initialFocus?.focus({ preventScroll: true });
 }
 
 function closeModal() {
+  if (!modalRoot.firstElementChild) return;
   modalRoot.innerHTML = '';
+  document.body.classList.remove('is-modal-open');
+  appShell?.removeAttribute('inert');
+  const returnFocus = modalReturnFocus;
+  modalReturnFocus = null;
+  if (returnFocus?.isConnected) returnFocus.focus({ preventScroll: true });
+}
+
+function modalFocusableElements() {
+  return [...modalRoot.querySelectorAll('a[href], button:not(:disabled), input:not(:disabled):not([type="hidden"]), select:not(:disabled), textarea:not(:disabled), [tabindex]:not([tabindex="-1"])')]
+    .filter((element) => !element.hidden && element.getAttribute('aria-hidden') !== 'true');
 }
 
 function formError(form, message) {
@@ -166,7 +185,7 @@ function formValues(form) {
 
 function orderRow(order) {
   const mainDate = order.type === 'SCHEDULED' && order.status === 'PLANNED' ? order.scheduledAt : order.completedAt || order.createdAt;
-  return `<article class="order-row" data-order-id="${order.id}" tabindex="0">
+  return `<article class="order-row" data-order-id="${order.id}" tabindex="0" role="button" aria-label="Открыть заказ №${order.id}">
     <span class="order-row__time">${escapeHtml(time(mainDate))}</span>
     <span class="order-row__route"><b>${escapeHtml(order.pickupAddress)} → ${escapeHtml(order.destinationAddress)}</b><small>${escapeHtml(order.vehicle || 'Автомобиль не указан')}</small></span>
     <span class="order-row__client"><b>${escapeHtml(order.client.name || order.client.phone)}</b><small>${escapeHtml(order.client.phone)}</small></span>
@@ -202,7 +221,7 @@ function orderFiltersMarkup() {
     <input class="input" id="order-search" type="search" maxlength="120" placeholder="Телефон, адрес, автомобиль" value="${attr(state.orderFilters.search)}">
     <select class="select" id="order-status"><option value="">Все статусы</option>${Object.entries(labels.orderStatus).map(([value, label]) => `<option value="${value}"${state.orderFilters.status === value ? ' selected' : ''}>${label}</option>`).join('')}</select>
     <select class="select" id="order-type"><option value="">Все типы</option>${Object.entries(labels.orderType).map(([value, label]) => `<option value="${value}"${state.orderFilters.type === value ? ' selected' : ''}>${label}</option>`).join('')}</select>
-    <div class="view-toggle"><button type="button" data-order-view="list" class="${state.orderView === 'list' ? 'is-active' : ''}"><i class="ti ti-list"></i></button><button type="button" data-order-view="board" class="${state.orderView === 'board' ? 'is-active' : ''}"><i class="ti ti-layout-kanban"></i></button></div>
+    <div class="view-toggle" aria-label="Вид заказов"><button type="button" data-order-view="list" class="${state.orderView === 'list' ? 'is-active' : ''}" aria-label="Показать списком" aria-pressed="${state.orderView === 'list'}"><i class="ti ti-list" aria-hidden="true"></i></button><button type="button" data-order-view="board" class="${state.orderView === 'board' ? 'is-active' : ''}" aria-label="Показать доской" aria-pressed="${state.orderView === 'board'}"><i class="ti ti-layout-kanban" aria-hidden="true"></i></button></div>
   </section>`;
 }
 
@@ -212,7 +231,7 @@ function orderBoard(orders) {
   ];
   return `<section class="board">${columns.map(([status, title]) => {
     const rows = orders.filter((order) => order.status === status);
-    return `<div class="board-column"><header class="board-column__head"><h3>${title}</h3><span>${rows.length}</span></header><div class="board-column__body">${rows.length ? rows.map((order) => `<article class="order-card" data-order-id="${order.id}"><b>Заказ №${order.id}</b><p>${escapeHtml(order.pickupAddress)} → ${escapeHtml(order.destinationAddress)}</p><div class="order-card__foot"><span>${escapeHtml(order.client.phone)}</span><strong>${order.amountCents == null ? '—' : money(order.amountCents)}</strong></div></article>`).join('') : '<div class="empty-state">Пусто</div>'}</div></div>`;
+    return `<div class="board-column"><header class="board-column__head"><h3>${title}</h3><span>${rows.length}</span></header><div class="board-column__body">${rows.length ? rows.map((order) => `<article class="order-card" data-order-id="${order.id}" tabindex="0" role="button" aria-label="Открыть заказ №${order.id}"><b>Заказ №${order.id}</b><p>${escapeHtml(order.pickupAddress)} → ${escapeHtml(order.destinationAddress)}</p><div class="order-card__foot"><span>${escapeHtml(order.client.phone)}</span><strong>${order.amountCents == null ? '—' : money(order.amountCents)}</strong></div></article>`).join('') : '<div class="empty-state">Пусто</div>'}</div></div>`;
   }).join('')}</section>`;
 }
 
@@ -357,7 +376,7 @@ async function renderClients() {
 }
 
 function clientRow(client) {
-  return `<article class="client-row" data-client-id="${client.id}" tabindex="0"><span class="client-row__identity"><b>${escapeHtml(client.name || 'Без имени')}</b><small>${escapeHtml(client.phone)}</small></span><span>${escapeHtml(client.defaultVehicle || '—')}</span><span>${client._count.orders} заказов</span><strong class="client-row__money">${money(client.totalCents)}</strong><strong class="client-row__debt">${client.debtCents ? money(client.debtCents) : '—'}</strong></article>`;
+  return `<article class="client-row" data-client-id="${client.id}" tabindex="0" role="button" aria-label="Открыть клиента ${attr(client.name || client.phone)}"><span class="client-row__identity"><b>${escapeHtml(client.name || 'Без имени')}</b><small>${escapeHtml(client.phone)}</small></span><span>${escapeHtml(client.defaultVehicle || '—')}</span><span>${client._count.orders} заказов</span><strong class="client-row__money">${money(client.totalCents)}</strong><strong class="client-row__debt">${client.debtCents ? money(client.debtCents) : '—'}</strong></article>`;
 }
 
 async function showClient(id) {
@@ -369,7 +388,7 @@ async function showClient(id) {
     <label class="field field--wide"><span>Заметка</span><textarea class="textarea" name="notes" maxlength="2000">${escapeHtml(client.notes || '')}</textarea></label>
     <div class="form-error field--wide" hidden></div>
   </form>
-  <section class="panel"><header class="panel__header"><h3>История заказов</h3></header><div class="order-list">${client.orders.length ? client.orders.map((order) => `<article class="order-row" data-order-id="${order.id}"><span class="order-row__time">${shortDate(order.createdAt)}</span><span class="order-row__route"><b>${escapeHtml(order.pickupAddress)} → ${escapeHtml(order.destinationAddress)}</b><small>${escapeHtml(order.vehicle || '')}</small></span><span></span>${statusBadge(order.status)}<strong class="order-row__amount">${order.amountCents == null ? '—' : money(order.amountCents)}</strong></article>`).join('') : emptyState('clipboard', 'Заказов нет')}</div></section>`, '<button class="button" data-close-modal>Отмена</button><button class="button button--primary" type="submit" form="client-form">Сохранить</button>', true);
+  <section class="panel"><header class="panel__header"><h3>История заказов</h3></header><div class="order-list">${client.orders.length ? client.orders.map((order) => `<article class="order-row" data-order-id="${order.id}" tabindex="0" role="button" aria-label="Открыть заказ №${order.id}"><span class="order-row__time">${shortDate(order.createdAt)}</span><span class="order-row__route"><b>${escapeHtml(order.pickupAddress)} → ${escapeHtml(order.destinationAddress)}</b><small>${escapeHtml(order.vehicle || '')}</small></span><span></span>${statusBadge(order.status)}<strong class="order-row__amount">${order.amountCents == null ? '—' : money(order.amountCents)}</strong></article>`).join('') : emptyState('clipboard', 'Заказов нет')}</div></section>`, '<button class="button" type="button" data-close-modal>Отмена</button><button class="button button--primary" type="submit" form="client-form">Сохранить</button>', true);
   document.querySelector('#client-form').addEventListener('submit', async (event) => {
     event.preventDefault();
     try {
@@ -383,18 +402,18 @@ async function showClient(id) {
 
 async function renderTasks() {
   const { tasks } = await api('/tasks');
-  const taskList = `<section class="panel"><div class="task-list">${tasks.length ? tasks.map((task) => `<article class="task-row${task.status === 'DONE' ? ' is-done' : ''}"><input class="task-row__check" type="checkbox" data-task-done="${task.id}"${task.status === 'DONE' ? ' checked' : ''}><span class="task-row__content"><b>${escapeHtml(task.title)}</b><small>${escapeHtml(task.description || '')}</small></span>${badge(labels.taskPriority[task.priority], task.priority === 'HIGH' ? 'orange' : '')}<span>${task.dueAt ? dateTime(task.dueAt) : 'Без срока'}</span><button class="icon-button icon-button--danger" data-delete-task="${task.id}" aria-label="Удалить"><i class="ti ti-trash"></i></button></article>`).join('') : emptyState('circle-check', 'Задач пока нет')}</div></section>`;
+  const taskList = `<section class="panel"><div class="task-list">${tasks.length ? tasks.map((task) => `<article class="task-row${task.status === 'DONE' ? ' is-done' : ''}"><input class="task-row__check" type="checkbox" data-task-done="${task.id}" aria-label="${task.status === 'DONE' ? 'Вернуть задачу в работу' : 'Отметить задачу выполненной'}"${task.status === 'DONE' ? ' checked' : ''}><span class="task-row__content"><b>${escapeHtml(task.title)}</b><small>${escapeHtml(task.description || '')}</small></span>${badge(labels.taskPriority[task.priority], task.priority === 'HIGH' ? 'orange' : '')}<span>${task.dueAt ? dateTime(task.dueAt) : 'Без срока'}</span><button class="icon-button icon-button--danger" type="button" data-delete-task="${task.id}" aria-label="Удалить задачу"><i class="ti ti-trash" aria-hidden="true"></i></button></article>`).join('') : emptyState('circle-check', 'Задач пока нет')}</div></section>`;
   const columns = [['TODO', 'Нужно сделать'], ['IN_PROGRESS', 'В процессе'], ['DONE', 'Выполнено']];
   const taskBoard = `<section class="board board--tasks">${columns.map(([status, title]) => {
     const rows = tasks.filter((task) => task.status === status);
     return `<div class="board-column"><header class="board-column__head"><h3>${title}</h3><span>${rows.length}</span></header><div class="board-column__body">${rows.length ? rows.map((task) => `<article class="order-card"><b>${escapeHtml(task.title)}</b><p>${escapeHtml(task.description || (task.dueAt ? `Срок: ${dateTime(task.dueAt)}` : 'Без срока'))}</p><div class="order-card__foot">${badge(labels.taskPriority[task.priority], task.priority === 'HIGH' ? 'orange' : '')}<span>${status !== 'DONE' ? `<button class="text-link" data-task-status="${status === 'TODO' ? 'IN_PROGRESS' : 'DONE'}" data-task-id="${task.id}">${status === 'TODO' ? 'Начать' : 'Завершить'}</button>` : `<button class="text-link" data-task-status="TODO" data-task-id="${task.id}">Вернуть</button>`}</span></div></article>`).join('') : '<div class="empty-state">Пусто</div>'}</div></div>`;
   }).join('')}</section>`;
-  const actions = `<div class="view-toggle"><button type="button" data-task-view="list" class="${state.taskView === 'list' ? 'is-active' : ''}"><i class="ti ti-list"></i></button><button type="button" data-task-view="board" class="${state.taskView === 'board' ? 'is-active' : ''}"><i class="ti ti-layout-kanban"></i></button></div><button class="button button--primary" data-action="new-task"><i class="ti ti-plus"></i><span class="mobile-hide">Новая задача</span></button>`;
+  const actions = `<div class="view-toggle" aria-label="Вид задач"><button type="button" data-task-view="list" class="${state.taskView === 'list' ? 'is-active' : ''}" aria-label="Показать списком" aria-pressed="${state.taskView === 'list'}"><i class="ti ti-list" aria-hidden="true"></i></button><button type="button" data-task-view="board" class="${state.taskView === 'board' ? 'is-active' : ''}" aria-label="Показать доской" aria-pressed="${state.taskView === 'board'}"><i class="ti ti-layout-kanban" aria-hidden="true"></i></button></div><button class="button button--primary" type="button" data-action="new-task"><i class="ti ti-plus" aria-hidden="true"></i><span class="mobile-hide">Новая задача</span></button>`;
   app.innerHTML = `<div class="page">${pageHeader('Задачи', 'Личные дела, звонки и обслуживание', actions)}<div id="tasks-content">${state.taskView === 'board' ? taskBoard : taskList}</div></div>`;
 }
 
 function openTaskForm() {
-  openModal('Новая задача', `<form id="task-form" class="form-grid"><label class="field field--wide"><span>Название *</span><input class="input" name="title" required maxlength="240" placeholder="Что нужно сделать"></label><label class="field"><span>Приоритет</span><select class="select" name="priority"><option value="LOW">Низкий</option><option value="MEDIUM" selected>Обычный</option><option value="HIGH">Высокий</option></select></label><label class="field"><span>Срок</span><input class="input" name="dueAt" type="datetime-local"></label><label class="field field--wide"><span>Описание</span><textarea class="textarea" name="description" maxlength="2000"></textarea></label><div class="form-error field--wide" hidden></div></form>`, '<button class="button" data-close-modal>Отмена</button><button class="button button--primary" type="submit" form="task-form">Создать</button>');
+  openModal('Новая задача', `<form id="task-form" class="form-grid"><label class="field field--wide"><span>Название *</span><input class="input" name="title" required maxlength="240" placeholder="Что нужно сделать"></label><label class="field"><span>Приоритет</span><select class="select" name="priority"><option value="LOW">Низкий</option><option value="MEDIUM" selected>Обычный</option><option value="HIGH">Высокий</option></select></label><label class="field"><span>Срок</span><input class="input" name="dueAt" type="datetime-local"></label><label class="field field--wide"><span>Описание</span><textarea class="textarea" name="description" maxlength="2000"></textarea></label><div class="form-error field--wide" hidden></div></form>`, '<button class="button" type="button" data-close-modal>Отмена</button><button class="button button--primary" type="submit" form="task-form">Создать</button>');
   document.querySelector('#task-form').addEventListener('submit', async (event) => {
     event.preventDefault();
     const body = formValues(event.currentTarget);
@@ -414,13 +433,13 @@ async function renderFinances() {
   const [summary, expenseData] = await Promise.all([api(`/finances/summary?${query}`), api(`/finances/expenses?${query}`)]);
   app.innerHTML = `<div class="page">${pageHeader('Финансы', 'Доходы и расходы за текущий месяц', '<button class="button button--primary" data-action="new-expense"><i class="ti ti-plus"></i><span class="mobile-hide">Добавить расход</span></button>')}
     <section class="finance-grid"><article class="finance-card finance-card--accent"><span>Выручка</span><strong>${money(summary.stats.revenueCents)}</strong></article><article class="finance-card"><span>Оплачено</span><strong>${money(summary.stats.paidCents)}</strong></article><article class="finance-card finance-card--danger"><span>Расходы</span><strong>${money(summary.stats.expenseCents)}</strong></article><article class="finance-card"><span>Прибыль</span><strong>${money(summary.stats.profitCents)}</strong></article></section>
-    <section class="panel"><header class="panel__header"><div><h2>Расходы</h2><p>${summary.stats.orderCount} заказов · средний чек ${money(summary.stats.averageCheckCents)} · долг ${money(summary.stats.debtCents)}</p></div><button class="text-link" data-action="export-csv">Выгрузить CSV</button></header><div class="expense-list">${expenseData.expenses.length ? expenseData.expenses.map((expense) => `<article class="expense-row"><span>${shortDate(expense.occurredAt)}</span><span>${escapeHtml(labels.expenseCategory[expense.category])}<small>${escapeHtml(expense.note || '')}</small></span><strong>${money(expense.amountCents)}</strong><button class="icon-button icon-button--danger" data-delete-expense="${expense.id}"><i class="ti ti-trash"></i></button></article>`).join('') : emptyState('receipt', 'Расходов за месяц нет')}</div></section>
+    <section class="panel"><header class="panel__header"><div><h2>Расходы</h2><p>${summary.stats.orderCount} заказов · средний чек ${money(summary.stats.averageCheckCents)} · долг ${money(summary.stats.debtCents)}</p></div><button class="text-link" type="button" data-action="export-csv">Выгрузить CSV</button></header><div class="expense-list">${expenseData.expenses.length ? expenseData.expenses.map((expense) => `<article class="expense-row"><span>${shortDate(expense.occurredAt)}</span><span>${escapeHtml(labels.expenseCategory[expense.category])}<small>${escapeHtml(expense.note || '')}</small></span><strong>${money(expense.amountCents)}</strong><button class="icon-button icon-button--danger" type="button" data-delete-expense="${expense.id}" aria-label="Удалить расход"><i class="ti ti-trash" aria-hidden="true"></i></button></article>`).join('') : emptyState('receipt', 'Расходов за месяц нет')}</div></section>
   </div>`;
 }
 
 function openExpenseForm() {
   const now = datetimeLocal(new Date());
-  openModal('Новый расход', `<form id="expense-form" class="form-grid"><label class="field"><span>Сумма, ₽ *</span><input class="input" name="amount" type="number" min="0.01" step="0.01" required></label><label class="field"><span>Категория</span><select class="select" name="category">${Object.entries(labels.expenseCategory).map(([value, label]) => `<option value="${value}">${label}</option>`).join('')}</select></label><label class="field field--wide"><span>Дата и время</span><input class="input" name="occurredAt" type="datetime-local" value="${now}"></label><label class="field field--wide"><span>Комментарий</span><textarea class="textarea" name="note" maxlength="1000"></textarea></label><div class="form-error field--wide" hidden></div></form>`, '<button class="button" data-close-modal>Отмена</button><button class="button button--primary" type="submit" form="expense-form">Добавить</button>');
+  openModal('Новый расход', `<form id="expense-form" class="form-grid"><label class="field"><span>Сумма, ₽ *</span><input class="input" name="amount" type="number" min="0.01" step="0.01" required></label><label class="field"><span>Категория</span><select class="select" name="category">${Object.entries(labels.expenseCategory).map(([value, label]) => `<option value="${value}">${label}</option>`).join('')}</select></label><label class="field field--wide"><span>Дата и время</span><input class="input" name="occurredAt" type="datetime-local" value="${now}"></label><label class="field field--wide"><span>Комментарий</span><textarea class="textarea" name="note" maxlength="1000"></textarea></label><div class="form-error field--wide" hidden></div></form>`, '<button class="button" type="button" data-close-modal>Отмена</button><button class="button button--primary" type="submit" form="expense-form">Добавить</button>');
   document.querySelector('#expense-form').addEventListener('submit', async (event) => {
     event.preventDefault();
     const body = formValues(event.currentTarget);
@@ -482,7 +501,8 @@ async function logout() {
 
 document.addEventListener('click', async (event) => {
   const close = event.target.closest('[data-close-modal]');
-  if (close) { closeModal(); return; }
+  if (close && modalRoot.contains(close)) { closeModal(); return; }
+  if (event.target.matches('[data-modal-backdrop]')) { closeModal(); return; }
   const action = event.target.closest('[data-action]')?.dataset.action;
   if (action === 'new-order') { openOrderForm(); return; }
   if (action === 'new-task') { openTaskForm(); return; }
@@ -498,7 +518,11 @@ document.addEventListener('click', async (event) => {
   if (view) {
     state.orderView = view.dataset.orderView;
     localStorage.setItem('ev19-order-view', state.orderView);
-    document.querySelectorAll('[data-order-view]').forEach((button) => button.classList.toggle('is-active', button === view));
+    document.querySelectorAll('[data-order-view]').forEach((button) => {
+      const isActive = button === view;
+      button.classList.toggle('is-active', isActive);
+      button.setAttribute('aria-pressed', String(isActive));
+    });
     await loadOrders();
     return;
   }
@@ -507,6 +531,11 @@ document.addEventListener('click', async (event) => {
   if (taskView) {
     state.taskView = taskView.dataset.taskView;
     localStorage.setItem('ev19-task-view', state.taskView);
+    document.querySelectorAll('[data-task-view]').forEach((button) => {
+      const isActive = button === taskView;
+      button.classList.toggle('is-active', isActive);
+      button.setAttribute('aria-pressed', String(isActive));
+    });
     await renderTasks();
     return;
   }
@@ -580,7 +609,37 @@ document.addEventListener('click', async (event) => {
 });
 
 document.addEventListener('keydown', (event) => {
-  if (event.key === 'Escape' && modalRoot.firstElementChild) closeModal();
+  const modal = modalRoot.querySelector('.modal');
+  if (event.key === 'Escape' && modal) {
+    event.preventDefault();
+    closeModal();
+    return;
+  }
+  if (event.key === 'Tab' && modal) {
+    const focusable = modalFocusableElements();
+    if (!focusable.length) {
+      event.preventDefault();
+      modal.focus();
+      return;
+    }
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (!modal.contains(document.activeElement)) {
+      event.preventDefault();
+      (event.shiftKey ? last : first).focus();
+    } else if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
+    return;
+  }
+  if ((event.key === 'Enter' || event.key === ' ') && event.target.matches('[data-order-id], [data-client-id]')) {
+    event.preventDefault();
+    event.target.click();
+  }
 });
 
 window.addEventListener('hashchange', renderCurrentRoute);
