@@ -59,6 +59,19 @@ function dateTime(value) {
   return new Intl.DateTimeFormat('ru-RU', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' }).format(new Date(value));
 }
 
+function orderRoute(order) {
+  const from = String(order?.pickupAddress || '').trim();
+  const to = String(order?.destinationAddress || '').trim();
+  if (from && to) return `${from} → ${to}`;
+  if (from) return `Откуда: ${from}`;
+  if (to) return `Куда: ${to}`;
+  return 'Маршрут не указан';
+}
+
+function clientContact(client) {
+  return client?.phone || 'Телефон не указан';
+}
+
 function time(value) {
   if (!value) return '—';
   return new Intl.DateTimeFormat('ru-RU', { hour: '2-digit', minute: '2-digit' }).format(new Date(value));
@@ -187,8 +200,8 @@ function orderRow(order) {
   const mainDate = order.type === 'SCHEDULED' && order.status === 'PLANNED' ? order.scheduledAt : order.completedAt || order.createdAt;
   return `<article class="order-row" data-order-id="${order.id}" tabindex="0" role="button" aria-label="Открыть заказ №${order.id}">
     <span class="order-row__time">${escapeHtml(time(mainDate))}</span>
-    <span class="order-row__route"><b>${escapeHtml(order.pickupAddress)} → ${escapeHtml(order.destinationAddress)}</b><small>${escapeHtml(order.vehicle || 'Автомобиль не указан')}</small></span>
-    <span class="order-row__client"><b>${escapeHtml(order.client.name || order.client.phone)}</b><small>${escapeHtml(order.client.phone)}</small></span>
+    <span class="order-row__route"><b>${escapeHtml(orderRoute(order))}</b><small>${escapeHtml(order.vehicle || 'Автомобиль не указан')}</small></span>
+    <span class="order-row__client"><b>${escapeHtml(order.client.name || 'Без имени')}</b><small>${escapeHtml(clientContact(order.client))}</small></span>
     ${statusBadge(order.status)}
     <strong class="order-row__amount">${order.amountCents == null ? '—' : money(order.amountCents)}</strong>
   </article>`;
@@ -209,7 +222,7 @@ async function renderDashboard() {
     <div class="dashboard-grid">
       <section class="panel"><header class="panel__header"><div><h2>Сегодняшние заказы</h2><p>Последние действия за день</p></div><a class="text-link" href="#/orders">Все заказы</a></header><div class="order-list">${data.recentOrders.length ? data.recentOrders.map(orderRow).join('') : emptyState('clipboard', 'Сегодня заказов пока нет')}</div></section>
       <div class="stack">
-        <section class="panel"><header class="panel__header"><div><h3>Ближайшие</h3><p>Запланированные поездки</p></div></header><div class="order-list">${data.planned.length ? data.planned.map((order) => `<article class="order-card" data-order-id="${order.id}"><b>${escapeHtml(dateTime(order.scheduledAt))}</b><p>${escapeHtml(order.pickupAddress)} → ${escapeHtml(order.destinationAddress)}</p><div class="order-card__foot"><span>${escapeHtml(order.client.phone)}</span><strong>${order.amountCents == null ? '—' : money(order.amountCents)}</strong></div></article>`).join('') : emptyState('calendar', 'Нет запланированных заказов')}</div></section>
+        <section class="panel"><header class="panel__header"><div><h3>Ближайшие</h3><p>Запланированные поездки</p></div></header><div class="order-list">${data.planned.length ? data.planned.map((order) => `<article class="order-card" data-order-id="${order.id}"><b>${escapeHtml(dateTime(order.scheduledAt))}</b><p>${escapeHtml(orderRoute(order))}</p><div class="order-card__foot"><span>${escapeHtml(order.client.phone || order.client.name || 'Телефон не указан')}</span><strong>${order.amountCents == null ? '—' : money(order.amountCents)}</strong></div></article>`).join('') : emptyState('calendar', 'Нет запланированных заказов')}</div></section>
         <section class="panel"><header class="panel__header"><div><h3>Задачи</h3><p>Что нельзя забыть</p></div><a class="text-link" href="#/tasks">Открыть</a></header><div class="task-list">${data.activeTasks.length ? data.activeTasks.map((task) => `<article class="task-row"><input class="task-row__check" type="checkbox" data-task-done="${task.id}" aria-label="Выполнить задачу"><span class="task-row__content"><b>${escapeHtml(task.title)}</b><small>${task.dueAt ? dateTime(task.dueAt) : 'Без срока'}</small></span>${badge(labels.taskPriority[task.priority], task.priority === 'HIGH' ? 'orange' : '')}<span></span><button class="icon-button" data-task-id="${task.id}" aria-label="Открыть"><i class="ti ti-chevron-right"></i></button></article>`).join('') : emptyState('circle-check', 'Активных задач нет')}</div></section>
       </div>
     </div>
@@ -218,7 +231,7 @@ async function renderDashboard() {
 
 function orderFiltersMarkup() {
   return `<section class="filters">
-    <input class="input" id="order-search" type="search" maxlength="120" placeholder="Телефон, адрес, автомобиль" value="${attr(state.orderFilters.search)}">
+    <input class="input" id="order-search" type="search" maxlength="120" placeholder="Имя, телефон, адрес, автомобиль" value="${attr(state.orderFilters.search)}">
     <select class="select" id="order-status"><option value="">Все статусы</option>${Object.entries(labels.orderStatus).map(([value, label]) => `<option value="${value}"${state.orderFilters.status === value ? ' selected' : ''}>${label}</option>`).join('')}</select>
     <select class="select" id="order-type"><option value="">Все типы</option>${Object.entries(labels.orderType).map(([value, label]) => `<option value="${value}"${state.orderFilters.type === value ? ' selected' : ''}>${label}</option>`).join('')}</select>
     <div class="view-toggle" aria-label="Вид заказов"><button type="button" data-order-view="list" class="${state.orderView === 'list' ? 'is-active' : ''}" aria-label="Показать списком" aria-pressed="${state.orderView === 'list'}"><i class="ti ti-list" aria-hidden="true"></i></button><button type="button" data-order-view="board" class="${state.orderView === 'board' ? 'is-active' : ''}" aria-label="Показать доской" aria-pressed="${state.orderView === 'board'}"><i class="ti ti-layout-kanban" aria-hidden="true"></i></button></div>
@@ -231,7 +244,7 @@ function orderBoard(orders) {
   ];
   return `<section class="board">${columns.map(([status, title]) => {
     const rows = orders.filter((order) => order.status === status);
-    return `<div class="board-column"><header class="board-column__head"><h3>${title}</h3><span>${rows.length}</span></header><div class="board-column__body">${rows.length ? rows.map((order) => `<article class="order-card" data-order-id="${order.id}" tabindex="0" role="button" aria-label="Открыть заказ №${order.id}"><b>Заказ №${order.id}</b><p>${escapeHtml(order.pickupAddress)} → ${escapeHtml(order.destinationAddress)}</p><div class="order-card__foot"><span>${escapeHtml(order.client.phone)}</span><strong>${order.amountCents == null ? '—' : money(order.amountCents)}</strong></div></article>`).join('') : '<div class="empty-state">Пусто</div>'}</div></div>`;
+    return `<div class="board-column"><header class="board-column__head"><h3>${title}</h3><span>${rows.length}</span></header><div class="board-column__body">${rows.length ? rows.map((order) => `<article class="order-card" data-order-id="${order.id}" tabindex="0" role="button" aria-label="Открыть заказ №${order.id}"><b>Заказ №${order.id}</b><p>${escapeHtml(orderRoute(order))}</p><div class="order-card__foot"><span>${escapeHtml(order.client.phone || order.client.name || 'Телефон не указан')}</span><strong>${order.amountCents == null ? '—' : money(order.amountCents)}</strong></div></article>`).join('') : '<div class="empty-state">Пусто</div>'}</div></div>`;
   }).join('')}</section>`;
 }
 
@@ -277,13 +290,13 @@ function orderFormMarkup(order = null) {
     <p class="form-hint field--wide" id="order-type-hint">${isScheduled ? 'Выберите дату и время поездки' : 'Заказ сохранится выполненным, текущие дата и время установятся автоматически'}</p>
     <label class="field field--wide" id="scheduled-field"${isScheduled ? '' : ' hidden'}><span>Дата и время *</span><input class="input" name="scheduledAt" type="datetime-local" value="${attr(datetimeLocal(order?.scheduledAt))}"></label>
     <div class="route-fields">
-      <div class="route-input"><i class="ti ti-map-pin-filled"></i><label><span>Откуда *</span><input name="pickupAddress" required maxlength="300" value="${attr(order?.pickupAddress || '')}" placeholder="Адрес подачи"></label></div>
-      <div class="route-input"><i class="ti ti-flag-filled"></i><label><span>Куда *</span><input name="destinationAddress" required maxlength="300" value="${attr(order?.destinationAddress || '')}" placeholder="Адрес назначения"></label></div>
+      <div class="route-input"><i class="ti ti-map-pin-filled"></i><label><span>Откуда</span><input name="pickupAddress" maxlength="300" value="${attr(order?.pickupAddress || '')}" placeholder="Адрес подачи"></label></div>
+      <div class="route-input"><i class="ti ti-flag-filled"></i><label><span>Куда</span><input name="destinationAddress" maxlength="300" value="${attr(order?.destinationAddress || '')}" placeholder="Адрес назначения"></label></div>
     </div>
-    <label class="field"><span>Телефон *</span><span class="input-wrap"><i class="ti ti-phone"></i><input name="phone" type="tel" required maxlength="30" value="${attr(order?.client.phone || '')}" placeholder="+7 999 000-00-00"></span></label>
-    <label class="field"><span>Имя клиента</span><input class="input" name="clientName" maxlength="120" value="${attr(order?.client.name || '')}" placeholder="Необязательно"></label>
+    <label class="field"><span>Телефон</span><span class="input-wrap"><i class="ti ti-phone"></i><input name="phone" type="tel" maxlength="30" value="${attr(order?.client.phone || '')}" placeholder="+7 999 000-00-00"></span></label>
+    <label class="field"><span>Имя клиента *</span><input class="input" name="clientName" required maxlength="120" value="${attr(order?.client.name || '')}" placeholder="Например, Алексей"></label>
     <label class="field field--wide"><span>Автомобиль</span><span class="input-wrap"><i class="ti ti-car"></i><input name="vehicle" maxlength="180" value="${attr(order?.vehicle || '')}" placeholder="Марка, модель, номер"></span></label>
-    <label class="field"><span>Стоимость, ₽</span><input class="input" name="amount" type="number" min="0" max="100000000" step="1" value="${amount}" placeholder="Можно указать позже"></label>
+    <label class="field"><span>Стоимость, ₽ *</span><input class="input" name="amount" type="number" min="0" max="100000000" step="1" required value="${amount}" placeholder="Сумма заказа"></label>
     <label class="field"><span>Статус оплаты</span><select class="select" name="paymentStatus"><option value="PAID"${order?.paymentStatus === 'PAID' || !order ? ' selected' : ''}>Оплачен</option><option value="UNPAID"${order?.paymentStatus === 'UNPAID' ? ' selected' : ''}>Не оплачен</option><option value="PARTIAL"${order?.paymentStatus === 'PARTIAL' ? ' selected' : ''}>Частично</option></select></label>
     <label class="field"><span>Способ оплаты</span><select class="select" name="paymentMethod"><option value="">Не указан</option>${Object.entries(labels.paymentMethod).map(([value, label]) => `<option value="${value}"${order?.paymentMethod === value ? ' selected' : ''}>${label}</option>`).join('')}</select></label>
     <label class="field"><span>Оплачено, ₽</span><input class="input" name="paidAmount" type="number" min="0" step="1" value="${paidAmount}" placeholder="Для частичной оплаты"></label>
@@ -344,8 +357,8 @@ async function showOrder(id) {
     <div class="detail-item"><span>Статус</span><strong>${statusBadge(order.status)}</strong></div>
     <div class="detail-item"><span>Тип</span><strong>${escapeHtml(labels.orderType[order.type])}</strong></div>
     <div class="detail-item"><span>Клиент</span><strong>${escapeHtml(order.client.name || 'Имя не указано')}</strong></div>
-    <div class="detail-item"><span>Телефон</span><strong><a href="tel:${attr(order.client.phoneNormalized)}">${escapeHtml(order.client.phone)}</a></strong></div>
-    <div class="detail-item detail-item--wide"><span>Маршрут</span><strong>${escapeHtml(order.pickupAddress)} → ${escapeHtml(order.destinationAddress)}</strong></div>
+    <div class="detail-item"><span>Телефон</span><strong>${order.client.phone ? `<a href="tel:${attr(order.client.phoneNormalized)}">${escapeHtml(order.client.phone)}</a>` : 'Не указан'}</strong></div>
+    <div class="detail-item detail-item--wide"><span>Маршрут</span><strong>${escapeHtml(orderRoute(order))}</strong></div>
     <div class="detail-item"><span>Автомобиль</span><strong>${escapeHtml(order.vehicle || '—')}</strong></div>
     <div class="detail-item"><span>Дата</span><strong>${escapeHtml(dateTime(order.scheduledAt || order.completedAt || order.createdAt))}</strong></div>
     <div class="detail-item"><span>Стоимость</span><strong>${order.amountCents == null ? 'Не указана' : money(order.amountCents)}</strong></div>
@@ -376,19 +389,19 @@ async function renderClients() {
 }
 
 function clientRow(client) {
-  return `<article class="client-row" data-client-id="${client.id}" tabindex="0" role="button" aria-label="Открыть клиента ${attr(client.name || client.phone)}"><span class="client-row__identity"><b>${escapeHtml(client.name || 'Без имени')}</b><small>${escapeHtml(client.phone)}</small></span><span>${escapeHtml(client.defaultVehicle || '—')}</span><span>${client._count.orders} заказов</span><strong class="client-row__money">${money(client.totalCents)}</strong><strong class="client-row__debt">${client.debtCents ? money(client.debtCents) : '—'}</strong></article>`;
+  return `<article class="client-row" data-client-id="${client.id}" tabindex="0" role="button" aria-label="Открыть клиента ${attr(client.name || client.phone || `#${client.id}`)}"><span class="client-row__identity"><b>${escapeHtml(client.name || 'Без имени')}</b><small>${escapeHtml(clientContact(client))}</small></span><span>${escapeHtml(client.defaultVehicle || '—')}</span><span>${client._count.orders} заказов</span><strong class="client-row__money">${money(client.totalCents)}</strong><strong class="client-row__debt">${client.debtCents ? money(client.debtCents) : '—'}</strong></article>`;
 }
 
 async function showClient(id) {
   const { client } = await api(`/clients/${id}`);
-  openModal(client.name || client.phone, `<form id="client-form" class="form-grid" data-client-id="${client.id}">
-    <label class="field"><span>Имя</span><input class="input" name="name" maxlength="120" value="${attr(client.name || '')}"></label>
-    <label class="field"><span>Телефон</span><input class="input" name="phone" type="tel" required value="${attr(client.phone)}"></label>
+  openModal(client.name || client.phone || `Клиент №${client.id}`, `<form id="client-form" class="form-grid" data-client-id="${client.id}">
+    <label class="field"><span>Имя *</span><input class="input" name="name" required maxlength="120" value="${attr(client.name || '')}"></label>
+    <label class="field"><span>Телефон</span><input class="input" name="phone" type="tel" maxlength="30" value="${attr(client.phone || '')}" placeholder="Необязательно"></label>
     <label class="field field--wide"><span>Автомобиль</span><input class="input" name="defaultVehicle" maxlength="180" value="${attr(client.defaultVehicle || '')}"></label>
     <label class="field field--wide"><span>Заметка</span><textarea class="textarea" name="notes" maxlength="2000">${escapeHtml(client.notes || '')}</textarea></label>
     <div class="form-error field--wide" hidden></div>
   </form>
-  <section class="panel"><header class="panel__header"><h3>История заказов</h3></header><div class="order-list">${client.orders.length ? client.orders.map((order) => `<article class="order-row" data-order-id="${order.id}" tabindex="0" role="button" aria-label="Открыть заказ №${order.id}"><span class="order-row__time">${shortDate(order.createdAt)}</span><span class="order-row__route"><b>${escapeHtml(order.pickupAddress)} → ${escapeHtml(order.destinationAddress)}</b><small>${escapeHtml(order.vehicle || '')}</small></span><span></span>${statusBadge(order.status)}<strong class="order-row__amount">${order.amountCents == null ? '—' : money(order.amountCents)}</strong></article>`).join('') : emptyState('clipboard', 'Заказов нет')}</div></section>`, '<button class="button" type="button" data-close-modal>Отмена</button><button class="button button--primary" type="submit" form="client-form">Сохранить</button>', true);
+  <section class="panel"><header class="panel__header"><h3>История заказов</h3></header><div class="order-list">${client.orders.length ? client.orders.map((order) => `<article class="order-row" data-order-id="${order.id}" tabindex="0" role="button" aria-label="Открыть заказ №${order.id}"><span class="order-row__time">${shortDate(order.createdAt)}</span><span class="order-row__route"><b>${escapeHtml(orderRoute(order))}</b><small>${escapeHtml(order.vehicle || '')}</small></span><span></span>${statusBadge(order.status)}<strong class="order-row__amount">${order.amountCents == null ? '—' : money(order.amountCents)}</strong></article>`).join('') : emptyState('clipboard', 'Заказов нет')}</div></section>`, '<button class="button button--danger" type="button" data-delete-client="${client.id}"><i class="ti ti-trash" aria-hidden="true"></i> Удалить</button><button class="button" type="button" data-close-modal>Отмена</button><button class="button button--primary" type="submit" form="client-form">Сохранить</button>', true);
   document.querySelector('#client-form').addEventListener('submit', async (event) => {
     event.preventDefault();
     try {
@@ -397,6 +410,18 @@ async function showClient(id) {
       toast('Клиент сохранён');
       await renderClients();
     } catch (error) { formError(event.currentTarget, error.message); }
+  });
+
+  document.querySelector('[data-delete-client]')?.addEventListener('click', async () => {
+    if (!window.confirm('Удалить клиента из списка? История его заказов сохранится.')) return;
+    try {
+      await api(`/clients/${client.id}`, { method: 'DELETE' });
+      closeModal();
+      toast('Клиент удалён');
+      await renderClients();
+    } catch (error) {
+      toast(error.message, 'error');
+    }
   });
 }
 

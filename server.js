@@ -127,7 +127,7 @@ app.use(errorHandler);
 
 if (require.main === module) {
   const server = app.listen(env.port, '0.0.0.0', () => {
-    console.log(`Evakuator19 запущен на порту ${env.port}`);
+    console.log(`http://localhost:${env.port}`);
   });
 
   const shutdown = (signal) => {

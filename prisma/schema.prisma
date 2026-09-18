@@ -96,16 +96,18 @@ model Session {
 model Client {
   id              Int      @id @default(autoincrement())
   name            String?
-  phone           String
-  phoneNormalized String   @unique
+  phone           String?
+  phoneNormalized String?  @unique
   defaultVehicle  String?
   notes           String?
   searchText      String   @default("")
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
+  deletedAt       DateTime?
   orders          Order[]
 
   @@index([createdAt])
+  @@index([deletedAt, updatedAt])
 }
 
 model Order {
@@ -113,8 +115,8 @@ model Order {
   type               OrderType      @default(REGULAR)
   status             OrderStatus
   clientId           Int
-  pickupAddress      String
-  destinationAddress String
+  pickupAddress      String?
+  destinationAddress String?
   vehicle            String?
   amountCents        Int?
   paidAmountCents    Int            @default(0)

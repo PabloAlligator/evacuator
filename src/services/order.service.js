@@ -43,13 +43,13 @@ function orderSearchText({ client, pickupAddress, destinationAddress, vehicle, s
 
 async function createOrder(body, userId) {
   const type = enumValue(body.type, TYPES, 'Тип заказа', 'REGULAR');
-  const pickupAddress = text(body.pickupAddress, 'Откуда забрать', 300, true);
-  const destinationAddress = text(body.destinationAddress, 'Куда отвезти', 300, true);
-  const clientName = text(body.clientName, 'Имя клиента', 120);
+  const pickupAddress = text(body.pickupAddress, 'Откуда забрать', 300);
+  const destinationAddress = text(body.destinationAddress, 'Куда отвезти', 300);
+  const clientName = text(body.clientName, 'Имя клиента', 120, true);
   const vehicle = text(body.vehicle, 'Автомобиль', 180);
   const notes = text(body.notes, 'Комментарий', 2000);
   const source = text(body.source, 'Источник', 80) || 'Другое';
-  const amountCents = moneyToCents(body.amount, 'Стоимость');
+  const amountCents = moneyToCents(body.amount, 'Стоимость', true);
   const scheduledAt = type === 'SCHEDULED' ? optionalDate(body.scheduledAt, 'Дата и время') : null;
   if (type === 'SCHEDULED' && !scheduledAt) throw new HttpError(400, 'Укажите дату и время запланированного заказа', 'VALIDATION_ERROR');
 
@@ -89,20 +89,25 @@ async function updateOrder(id, body) {
 
     const type = body.type !== undefined ? enumValue(body.type, TYPES, 'Тип заказа') : existing.type;
     const status = body.status !== undefined ? enumValue(body.status, STATUSES, 'Статус заказа') : existing.status;
-    const pickupAddress = body.pickupAddress !== undefined ? text(body.pickupAddress, 'Откуда забрать', 300, true) : existing.pickupAddress;
-    const destinationAddress = body.destinationAddress !== undefined ? text(body.destinationAddress, 'Куда отвезти', 300, true) : existing.destinationAddress;
-    const clientName = body.clientName !== undefined ? text(body.clientName, 'Имя клиента', 120) : existing.client.name;
+    const pickupAddress = body.pickupAddress !== undefined ? text(body.pickupAddress, 'Откуда забрать', 300) : existing.pickupAddress;
+    const destinationAddress = body.destinationAddress !== undefined ? text(body.destinationAddress, 'Куда отвезти', 300) : existing.destinationAddress;
+    const clientName = body.clientName !== undefined ? text(body.clientName, 'Имя клиента', 120, true) : existing.client.name;
     const vehicle = body.vehicle !== undefined ? text(body.vehicle, 'Автомобиль', 180) : existing.vehicle;
     const notes = body.notes !== undefined ? text(body.notes, 'Комментарий', 2000) : existing.notes;
     const source = body.source !== undefined ? text(body.source, 'Источник', 80, true) : existing.source;
-    const amountCents = body.amount !== undefined ? moneyToCents(body.amount, 'Стоимость') : existing.amountCents;
+    const amountCents = body.amount !== undefined ? moneyToCents(body.amount, 'Стоимость', true) : existing.amountCents;
     const scheduledAt = type === 'SCHEDULED'
       ? body.scheduledAt !== undefined ? optionalDate(body.scheduledAt, 'Дата и время') : existing.scheduledAt
       : null;
     if (type === 'SCHEDULED' && !scheduledAt) throw new HttpError(400, 'Укажите дату и время запланированного заказа', 'VALIDATION_ERROR');
 
     const client = body.phone !== undefined || body.clientName !== undefined || body.vehicle !== undefined
-      ? await upsertClient(tx, { phone: body.phone || existing.client.phone, name: clientName, vehicle })
+      ? await upsertClient(tx, {
+          phone: body.phone !== undefined ? body.phone : existing.client.phone,
+          name: clientName,
+          vehicle,
+          clientId: existing.client.id,
+        })
       : existing.client;
     const payments = body.amount !== undefined || body.paymentStatus !== undefined || body.paymentMethod !== undefined || body.paidAmount !== undefined
       ? paymentData({
